@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FestIUTo</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/nav.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/footer.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    {% block head %}
+
+	{% endblock %}
+</head>
+<body>
+    <nav>
+		<div class="logo-menu">
+			<svg viewBox="0 0 24 24"><path id="primary" d="M17,5.15a23.88,23.88,0,0,1-3.27-2.84,1,1,0,0,0-1.09-.24A1,1,0,0,0,12,3V13.76a4.5,4.5,0,1,0,2,3.74V5.34a15.88,15.88,0,0,0,1.9,1.49c.83.54,1.57,1.41.74,3.85A1,1,0,0,0,17.27,12a1,1,0,0,0,1.27-.63C19.49,8.5,19,6.43,17,5.15Z"></path></svg>
+			<h1>FEST<span>IUT</span>'O</h1>
+		</div>
+		<button type="button" class="btn-hamburger" data-action="nav-toggle">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
+
+		<ul class="nav-menu">
+			<li class="nav-item"><a href="#">ACCUEIL</a></li>
+			<li class="nav-item"><a href="#">PROGRAMMATION</a></li>
+			<li class="nav-item"><a href="#">BILLETTERIE</a></li>
+            <li class="nav-item"><a href="#">GROUPE</a></li>
+            <li class="nav-item"><a href="#">CONTACT</a></li>
+			<div class="connexion-menu mobile">
+				<a href="#">INSCRIPTION</a>
+			</div>
+		</ul>
+
+        <div class="connexion-menu desktop">
+            <a href="#">INSCRIPTION</a>
+        </div>
+	</nav>
+	<main>
+    {% block main %}
+	
+
+	
+    {% endblock %}
+	</main>
+	<footer>
+		<div class="container">
+			<ul>
+				<li>LOREM IPSUM</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+			</ul>
+			<ul>
+				<li>LOREM IPSUM</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+			</ul>
+			<ul>
+				<li>LOREM IPSUM</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+			</ul>
+			<ul>
+				<li>LOREM IPSUM</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+			</ul>
+			<ul>
+				<li>LOREM IPSUM</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+			</ul>
+			<ul>
+				<li>LOREM IPSUM</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+				<li>DOLOR SIT AMET</li>
+			</ul>
+		</div>
+	</footer>
+
+	<script>
+		let nav = document.querySelector('nav');
+		let navToggle = nav.querySelector("[data-action='nav-toggle']");
+		let navMenu = nav.querySelector('.nav-menu');
+		let navConnexion = nav.querySelector('.connexion-menu');
+
+		navToggle.addEventListener('click', () => {
+			if (nav.classList.contains('opened')) {
+				nav.classList.remove('opened');
+			} else {
+				nav.classList.add('opened');
+			}
+		})
+	</script>
+</body>
+</html>
