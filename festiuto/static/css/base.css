@@ -21,3 +21,28 @@ main{
     padding: 100px 50px;
 }
 
+section#intersection{
+    display: flex;
+    align-items: center;
+}
+
+section#intersection .title{
+    font-size: 2em;
+}
+
+section#intersection .ligne{
+    background-color: #A5A5A5;
+    flex-grow: 1;
+    height: 3px;
+    border-radius: 25px;
+    margin-left: 100px;
+}
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
