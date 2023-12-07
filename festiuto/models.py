@@ -27,7 +27,6 @@ class Billet(db.Model):
     idB = db.Column(db.Integer, primary_key=True)
     dateDebutValidite = db.Column(db.Date)
     idV = db.Column(db.Integer, db.ForeignKey('visiteur.idV'), nullable=False)
-    idTb = db.Column(db.Integer, db.ForeignKey('typeBillet.idTb'), nullable=False)
 
     typeBillet = db.relationship('TypeBillet', backref='billets')
     visiteur = db.relationship('Visiteur', backref='billets')
@@ -92,7 +91,6 @@ class Instrument(db.Model):
 
 class LienRS(db.Model):
     idG = db.Column(db.String(42), primary_key=True, nullable=False)
-    idRs = db.Column(db.Integer, db.ForeignKey('reseausocial.idRs'), primary_key=True, nullable=False)
     pos = db.Column(db.Integer)
     pseudo = db.Column(db.String(80))
     urlReseau = db.Column(db.String(200))
