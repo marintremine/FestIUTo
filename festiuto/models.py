@@ -19,6 +19,7 @@ class TypeBillet(db.Model):
     nomB = db.Column(db.String(50))
     prix = db.Column(db.DECIMAL(5, 2))
     duree = db.Column(db.Integer)
+    
 
     def __repr__(self):
         return f"<TypeBillet idTb={self.idTb} nomB={self.nomB} prix={self.prix} duree={self.duree}>"
@@ -27,6 +28,7 @@ class Billet(db.Model):
     idB = db.Column(db.Integer, primary_key=True)
     dateDebutValidite = db.Column(db.Date)
     idV = db.Column(db.Integer, db.ForeignKey('visiteur.idV'), nullable=False)
+    idTb = db.Column(db.Integer, db.ForeignKey('type_billet.idTb'), nullable=False)
 
     typeBillet = db.relationship('TypeBillet', backref='billets')
     visiteur = db.relationship('Visiteur', backref='billets')
@@ -90,16 +92,19 @@ class Instrument(db.Model):
 
 
 class LienRS(db.Model):
-    idG = db.Column(db.String(42), primary_key=True, nullable=False)
+    idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), primary_key=True, nullable=False)
+    idRs = db.Column(db.Integer, db.ForeignKey('reseau_social.idRs'), nullable=False, primary_key=True)
     pos = db.Column(db.Integer)
     pseudo = db.Column(db.String(80))
     urlReseau = db.Column(db.String(200))
+    
+    
 
     groupe = db.relationship('Groupe', backref='lienrs')
     reseau = db.relationship('ReseauSocial', backref='lienrs')
 
     def __repr__(self):
-        return f"<LienRS idG={self.idG} idRs={self.idR} pos={self.pos} pseudo={self.pseudo} urlReseau={self.urlReseau}>"
+        return f"<LienRS idG={self.idG} idRs={self.idRs} pos={self.pos} pseudo={self.pseudo} urlReseau={self.urlReseau}>"
 
 
 class Lieu(db.Model):
@@ -114,8 +119,8 @@ class Lieu(db.Model):
 class Photo(db.Model):
     idPh = db.Column(db.Integer, primary_key=True)
     urlPh = db.Column(db.String(200))
-    idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), nullable=False)
     pos = db.Column(db.Integer)
+    idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), nullable=False)
 
     groupe = db.relationship('Groupe', backref='photo')
 
@@ -169,7 +174,7 @@ class Video(db.Model):
         return f"<Video idVideo={self.idVideo} urlVideo={self.urlVideo} idG={self.idG} pos={self.pos}>"
     
 class SInscrit(db.Model):
-    idEv = db.Column(db.Integer, db.ForeignKey('evenement.idE'), primary_key=True, nullable=False)
+    idEv = db.Column(db.Integer, db.ForeignKey('evenement.idEv'), primary_key=True, nullable=False)
     idV = db.Column(db.Integer, db.ForeignKey('visiteur.idV'), primary_key=True, nullable=False)
 
     evenement = db.relationship('Evenement', backref='inscrits')
@@ -191,9 +196,9 @@ class Visiteur(db.Model):
                f"numtel={self.numtel} email={self.email} motdepasse={self.motdepasse} admin={self.admin}>"
     
 class Evenement(db.Model):
-    idE = db.Column(db.Integer, primary_key=True)
-    typeE = db.Column(db.String(80))
-    descrE = db.Column(db.String(200))
+    idEv = db.Column(db.Integer, primary_key=True)
+    typeEv = db.Column(db.String(80))
+    descrEv = db.Column(db.String(200))
     tempsMontage = db.Column(db.Time)
     tempsDemontage = db.Column(db.Time)
     gratuit = db.Column(db.Boolean)
