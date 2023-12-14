@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block head %}
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/billetterie.css')}}">
+
+{% endblock %}
+{% block main %}
+
+
+<div class="container">
+    <div>
+        <h1>BILLETTERIE</h1>
+    </div>
+
+    <div>
+        <p>Vous pouvez acheter vos billets en ligne :</p>
+    </div>
+
+    <div>
+        <h2>Types de billets disponibles :</h2>
+        <ul class="ticket-container">
+            <li class="ticket-box">
+                <h3>Billet 1 jour</h3>
+                <p>10.00€</p>
+                <input type="date" value="2018-07-22" min="2018-01-01" max="2018-12-31">
+                <button type="button">Acheter</button>
+            </li>
+            <li class="ticket-box">
+                <h3>Billet 2 jours</h3>
+                <p>15.00€</p>
+                <button type="button">Acheter</button>
+            </li>
+            <li class="ticket-box">
+                <h3>Billet 3 jours</h3>
+                <p>20.00€</p>
+                <button type="button">Acheter</button>
+            </li>
+            <li class="ticket-box">
+                <h3>Billet saisonnier</h3>
+                <p>50.00€</p>
+                <button type="button">Acheter</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %}

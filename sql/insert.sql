@@ -1,27 +1,22 @@
 INSERT INTO groupe (idG, nomG, descriptionG) VALUES
-  (1, 'Nirvana', 'Grunge Rock américain'),
-  (2, 'Pink Floyd', 'Rock psychédélique du Royaume-Uni'),
+  (1, 'Nirvana', 'Grunge Rock amÃ©ricain'),
+  (2, 'Pink Floyd', 'Rock psychÃ©dÃ©lique du Royaume-Uni'),
   (3, 'The Beatles', 'Rock britannique'),
   (4, 'The Rolling Stones', 'Rock britannique'),
   (5, 'The Who', 'Rock britannique'),
-  (6, 'The Doors', 'Rock américain'),
+  (6, 'The Doors', 'Rock amÃ©ricain'),
   (7, 'The Weekend', 'Artiste canadien pop / new wave');
 
-INSERT INTO style (idS, nomS) VALUES
-  (1, 'Rock'),
-  (2, 'Rock psychédélique'),
-  (3, 'Rock progressif'),
-  (4, 'Rock alternatif'),
-  (5, 'Grunge'),
-  (6, 'Pop'),
-  (7, 'New wave');
+INSERT INTO style (idS_1,idS_2, nomS) VALUES
+  (1, NULL, 'Rock'),
+  (2, 1 ,'Rock psychÃ©dÃ©lique'),
+  (3, 1,'Rock progressif'),
+  (4, 1,'Rock alternatif'),
+  (5, 1,'Grunge'),
+  (6, NULL,'Pop'),
+  (7, 6,'New wave');
 
-INSERT INTO etre_sous_style (idS_1, idS_2) VALUES
-  (2, 1),
-  (3, 1),
-  (4, 1),
-  (5, 1),
-  (7, 6);
+
 INSERT INTO posseder (idG, idS) VALUES
   (1, 1),
   (1, 5),
@@ -72,22 +67,22 @@ INSERT INTO instrument (idI, nomI) VALUES
   (4, 'Chant'),
   (5, 'Clavier'),
   (6, 'Piano'),
-  (7, 'Synthétiseur'),
+  (7, 'SynthÃ©tiseur'),
   (8, 'Saxophone'),
   (9, 'Trompette'),
   (10, 'Violon'),
   (11, 'Violoncelle'),
-  (12, 'Flûte'),
+  (12, 'Flute'),
   (13, 'Harpe'),
   (14, 'Trombone'),
   (15, 'Tuba'),
-  (16, 'Accordéon'),
+  (16, 'AccordÃ©on'),
   (17, 'Banjo'),
   (18, 'Harmonica'),
   (19, 'Orgue'),
   (20, 'Percussions'),
   (21, 'Sitar'),
-  (22, 'Ukulélé'),
+  (22, 'UkulÃ©lÃ©'),
   (23, 'Xylophone');
 
 INSERT INTO jouer (idI, ida) VALUES
@@ -294,3 +289,8 @@ INSERT INTO s_inscrit (idEv, idV) VALUES
   (3, 5),
   (4, 5),
   (7, 5);
+
+ 
+
+INSERT INTO visiteur (nomV,prenomV,dateNaissV,numtel,email,motdepasse,admin) VALUES
+	 ('Admin','Admin','2000-01-01','00000000000','admin@festiuto.fr','$argon2id$v=19$m=65536,t=3,p=4$ZH5xMnyCRPxUa6p4AfukBg$R/3k+d593IAtRG64d+z55t489Zw858RHzUHAO1ZK860',NULL);

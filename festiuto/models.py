@@ -1,6 +1,9 @@
 
 from base64 import b64encode
-from .app import db
+from .app import db,login_manager
+import argon2
+
+ph = argon2.PasswordHasher()
 
 class Artiste(db.Model):
     idA = db.Column(db.Integer, primary_key=True)
@@ -12,7 +15,7 @@ class Artiste(db.Model):
     groupe = db.relationship('Groupe', backref='artistes')
 
     def __repr__(self):
-        return f"<Artiste ida={self.idA} noma={self.nomA} prenoma={self.prenomA} dateNaissA={self.dateNaissA} idG={self.idG}>"
+        return f"<Artisteimport argon2 ida={self.idA} noma={self.nomA} prenoma={self.prenomA} dateNaissA={self.dateNaissA} idG={self.idG}>"
 
 class TypeBillet(db.Model):
     idTb = db.Column(db.Integer, primary_key=True)
@@ -36,12 +39,7 @@ class Billet(db.Model):
     def __repr__(self):
         return f"<Billet idB={self.idB} dateDebutValidite={self.dateDebutValidite} idTb={self.idTb} idV={self.idV}>"
     
-class EtreSousStyle(db.Model):
-    idS_1 = db.Column(db.Integer, db.ForeignKey('style.idS'), primary_key=True, nullable=False)
-    idS_2 = db.Column(db.Integer, db.ForeignKey('style.idS'), primary_key=True, nullable=False)
 
-    s1 = db.relationship('Style', backref='sous_styles1')
-    s2 = db.relationship('Style', backref='sous_styles2')
 
 class Favoris(db.Model):
     idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), primary_key=True, nullable=False)
@@ -54,8 +52,7 @@ class Favoris(db.Model):
 class Groupe(db.Model):
     idG = db.Column(db.String(42), primary_key=True)
     nomG = db.Column(db.String(42))
-    descriptionG = db.Column(db.String(42))
-
+    descriptionG = db.Column(db.String(42)) 
     def __repr__(self):
         return f"<Groupe idG={self.idG} nomG={self.nomG} descriptionG={self.descriptionG}>"
 
@@ -76,8 +73,8 @@ class Heberge(db.Model):
     dateDebut = db.Column(db.Date)
     dateFin = db.Column(db.Date)
 
-    groupe = db.relationship('Groupe', backref='herberge')
-    hebergement = db.relationship('Herbegement', backref='heberge')
+    groupe = db.relationship('Groupe', backref='heberge')
+    hebergement = db.relationship('Hebergement', backref='heberge')
 
     def __repr__(self):
         return f"<Heberge idG={self.idG} idH={self.idH} dateDebut={self.dateDebut} dateFin={self.dateFin}>"
@@ -145,18 +142,27 @@ class Jouer(db.Model):
 
 
 class Style(db.Model):
-    idS = db.Column(db.Integer, primary_key=True)
+    idS_1 = db.Column(db.Integer, primary_key=True)
+    idS_2 = db.Column(db.Integer, db.ForeignKey("style.idS_1", ondelete="CASCADE", onupdate="CASCADE"))
     nomS = db.Column(db.String(280))
 
-    def __repr__(self):
-        return f"<Style idS={self.idS} nomS={self.nomS}>"
+    style = db.relationship("Style")
 
+    def __repr__(self):
+        return f"<Style idS={self.idS_1} nomS={self.nomS}>"
+
+# class EtreSousStyle(db.Model):
+#     idS_1 = db.Column(db.Integer, db.ForeignKey('style.idS'), primary_key=True, nullable=False)
+#     idS_2 = db.Column(db.Integer, db.ForeignKey('style.idS'), primary_key=True, nullable=False)
+
+#     s1 = db.relationship('Style', backref='sous_styles1')
+#     s2 = db.relationship('Style', backref='sous_styles2')
 
 
     
 class Posseder(db.Model):
     idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), primary_key=True, nullable=False)
-    idS = db.Column(db.Integer, db.ForeignKey('style.idS'), primary_key=True, nullable=False)
+    idS = db.Column(db.Integer, db.ForeignKey('style.idS_1'), primary_key=True, nullable=False)
 
     groupe = db.relationship('Groupe', backref='styles')
     style = db.relationship('Style', backref='groupes')
@@ -172,7 +178,7 @@ class Video(db.Model):
 
     def __repr__(self):
         return f"<Video idVideo={self.idVideo} urlVideo={self.urlVideo} idG={self.idG} pos={self.pos}>"
-    
+    ph = argon2.PasswordHasher()
 class SInscrit(db.Model):
     idEv = db.Column(db.Integer, db.ForeignKey('evenement.idEv'), primary_key=True, nullable=False)
     idV = db.Column(db.Integer, db.ForeignKey('visiteur.idV'), primary_key=True, nullable=False)
@@ -187,14 +193,57 @@ class Visiteur(db.Model):
     prenomV = db.Column(db.String(50))
     dateNaissV = db.Column(db.Date)
     numtel = db.Column(db.String(12))
-    email = db.Column(db.String(255))
+    email = db.Column(db.String(255), unique=True)
     motdepasse = db.Column(db.String(255))
     admin = db.Column(db.Boolean)
 
+    
     def __repr__(self):
         return f"<Visiteur idV={self.idV} nomV={self.nomV} prenomV={self.prenomV} dateNaissV={self.dateNaissV} " \
                f"numtel={self.numtel} email={self.email} motdepasse={self.motdepasse} admin={self.admin}>"
     
+    def is_authenticated(self):
+        """
+        Returns True if the user is authenticated.
+        """
+        return True
+    def is_active(self):
+        """
+        Returns True if the user is active.
+        """
+        return True
+    def is_anonymous(self):
+        """
+        Returns True if the user is anonymous.
+        """
+        return False
+    
+    def get_id(self):
+        """
+        Returns the user's id.
+        """
+        return str(self.idV)
+
+    @staticmethod
+    def generate_hash(password):
+        """Generate a hash from a password"""
+        return ph.hash(password)
+
+    @staticmethod
+    def verify_password(password, hashed_password):
+        """Verify a password against a hash"""
+        try:
+            return ph.verify(hashed_password, password)
+        except argon2.exceptions.VerifyMismatchError:
+            return False
+    
+@login_manager.user_loader
+def load_user(user_id):
+    """
+    Load a user from the database.
+    """
+    return Visiteur.query.get(int(user_id))
+
 class Evenement(db.Model):
     idEv = db.Column(db.Integer, primary_key=True)
     typeEv = db.Column(db.String(80))

@@ -28,18 +28,18 @@
 		</button>
 
 		<ul class="nav-menu">
-			<li class="nav-item"><a href="#">ACCUEIL</a></li>
-			<li class="nav-item"><a href="#">PROGRAMMATION</a></li>
-			<li class="nav-item"><a href="#">BILLETTERIE</a></li>
-            <li class="nav-item"><a href="#">GROUPE</a></li>
-            <li class="nav-item"><a href="#">CONTACT</a></li>
+			<li class="nav-item"><a href="{{url_for('index')}}">ACCUEIL</a></li>
+			<li class="nav-item"><a href="{{url_for('programmation')}}">PROGRAMMATION</a></li>
+			<li class="nav-item"><a href="{{url_for('billetterie')}}">BILLETTERIE</a></li>
+            <li class="nav-item"><a href="{{url_for('groupe')}}">GROUPE</a></li>
+            <li class="nav-item"><a href="{{url_for('contact')}}">CONTACT</a></li>
 			<div class="connexion-menu mobile">
-				<a href="#">INSCRIPTION</a>
+				<a href="{{url_for('inscription')}}">INSCRIPTION</a>
 			</div>
 		</ul>
 
         <div class="connexion-menu desktop">
-            <a href="#">INSCRIPTION</a>
+            <a href="{{url_for('inscription')}}">INSCRIPTION</a>
         </div>
 	</nav>
 	<main>
