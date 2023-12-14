@@ -46,3 +46,7 @@ section#intersection .ligne{
   'GRAD' 0,
   'opsz' 24
 }
+
+a{
+    cursor: pointer;
+}

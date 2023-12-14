@@ -53,7 +53,7 @@ nav .nav-menu{
 }
 
 
-nav .nav-menu li a{
+nav .nav-menu li>a{
     color: #A5A5A5;
     padding: 5px 10px;
     position: relative;
@@ -62,26 +62,18 @@ nav .nav-menu li a{
     cursor: pointer;
 }
 
-nav .nav-menu li a:hover{
+nav .nav-menu li>a:hover{
     color: #fff;
 }
 
-nav .connexion-menu{
-    border-bottom: 1px solid #A5A5A5;
-}
-
-nav .connexion-menu a{
+nav .connexion-menu>a {
     color: #FFFFFF;
     font-weight: 550;
 }
 
-nav .connexion-menu:hover a{ 
-    color: #F61353;  
-}
 
-nav .connexion-menu:hover{
-    border-bottom: 1px solid #F61353;
-}
+
+
 
 
 
@@ -141,7 +133,76 @@ nav .desktop{
     display: block;
 }
 
-@media screen and (max-width: 950px) {
+
+/* dropdown */
+
+nav .dropdown {
+	position: relative;
+    padding: 0 3em;
+    
+}
+
+.line{
+    border-bottom: #A5A5A5 1px solid;
+}
+
+nav .connexion-menu:hover .line{
+    border-bottom: #F61353 1px solid;
+}
+
+nav .dropdown>a{
+    color: #FFFFFF;
+    font-weight: 550;
+}
+
+
+nav .dropdown>a::after {
+	content: '';
+	display: inline-block;
+	margin-left: .5em;
+	vertical-align: middle;
+	border-top: .3em solid #fff;
+	border-right: .3em solid transparent;
+	border-left: .3em solid transparent;
+}
+nav .dropdown.show a::after {
+	transform: rotate(180deg);
+}
+
+nav .dropdown-menu {
+	display: none;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 100%;
+	padding: .5em 0;
+	margin-top: .5em;
+	border: 1px solid rgba(0,0,0,.3);
+	border-radius: 5px;
+    background-color: #141414;
+}
+
+
+nav .dropdown.show .dropdown-menu {
+	display: block;
+}
+nav .dropdown-item {
+	display: block;
+	padding: 0 1.5em;
+	font-size: .875em;
+	color: #FFFFFF;
+	line-height: 3;
+	text-decoration: none;
+    text-align: center;
+}
+
+nav .dropdown-item:hover {
+    
+    color: #F61353;
+}
+
+
+@media screen and (max-width: 1100px) {
     nav{
         border-bottom: none;
         padding: 0 20px;
@@ -183,11 +244,35 @@ nav .desktop{
 
 	nav .nav-item > a {
 		display: block;
+        text-align: center;
+        padding: 5px 10px;
 	}
 
 	nav .btn-hamburger {
 		display: block;
 	}
 
+    nav .dropdown-menu {
+		position: relative;
+		top: 0;
+	}
+
+    .line{
+        border-bottom: none;
+    }
+
+    nav .connexion-menu:hover .line{
+        border-bottom: none;
+    }
+
+    nav .nav-menu .connexion-menu>a {
+        color: #FFFFFF;
+        font-weight: 550;
+    }
+    
+
+
 }
+
+
 

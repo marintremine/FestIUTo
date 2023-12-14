@@ -33,13 +33,54 @@
 			<li class="nav-item"><a href="{{url_for('billetterie')}}">BILLETTERIE</a></li>
             <li class="nav-item"><a href="{{url_for('groupe')}}">GROUPE</a></li>
             <li class="nav-item"><a href="{{url_for('contact')}}">CONTACT</a></li>
-			<div class="connexion-menu mobile">
-				<a href="{{url_for('inscription')}}">INSCRIPTION</a>
-			</div>
+
+			
+
+			<li class="connexion-menu mobile">
+
+				{% if current_user.is_authenticated %}
+				
+				<div class="nav-item dropdown dropdown-mobile">
+					
+					<a data-action="dropdown-toggle-mobile">{{ current_user.prenomV.upper() }}</a>
+	
+					<div class="line"></div>
+	
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">Voir mon profil</a>
+						<a class="dropdown-item" href="#">Voir mon panier</a>
+						<a class="dropdown-item" href="{{url_for('logout')}}">Se déconnecter</a>
+					</div>
+				</div>
+				{% else %}
+					<a href="{{url_for('connexion')}}">SE CONNECTER</a>
+					<div class="line"></div>
+				{% endif %}
+	
+			</li>
 		</ul>
 
         <div class="connexion-menu desktop">
-            <a href="{{url_for('inscription')}}">INSCRIPTION</a>
+
+			{% if current_user.is_authenticated %}
+			
+			<div class="nav-item dropdown dropdown-desktop">
+				
+				<a data-action="dropdown-toggle-desktop">{{ current_user.prenomV.upper() }}</a>
+
+				<div class="line"></div>
+
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="#">Voir mon profil</a>
+					<a class="dropdown-item" href="#">Voir mon panier</a>
+					<a class="dropdown-item" href="{{url_for('logout')}}">Se déconnecter</a>
+				</div>
+			</div>
+			{% else %}
+				<a href="{{url_for('connexion')}}">SE CONNECTER</a>
+				<div class="line"></div>
+			{% endif %}
+
         </div>
 	</nav>
 	<main>
@@ -92,9 +133,40 @@
 
 	<script>
 		let nav = document.querySelector('nav');
+
+		// DROPDOWN DESKTOP
+
+		let dropdownDesktop = nav.querySelector('.dropdown-desktop');
+		let dropdownToggleDesktop = nav.querySelector("[data-action='dropdown-toggle-desktop']");
+
+		if (dropdownToggleDesktop != null) {
+			dropdownToggleDesktop.addEventListener('click', () => {
+				if (dropdownDesktop.classList.contains('show')) {
+					dropdownDesktop.classList.remove('show');
+				} else {
+					dropdownDesktop.classList.add('show');
+				}
+			})
+		}
+
+		// DROPDOWN MOBILE
+
+		let dropdownMobile = nav.querySelector('.dropdown-mobile');
+		let dropdownToggleMobile = nav.querySelector("[data-action='dropdown-toggle-mobile']");
+		
+		if (dropdownToggleMobile != null) {
+			dropdownToggleMobile.addEventListener('click', () => {
+				if (dropdownMobile.classList.contains('show')) {
+					dropdownMobile.classList.remove('show');
+				} else {
+					dropdownMobile.classList.add('show');
+				}
+			})
+		}
+
+		// RESPONSIVE NAV
+		
 		let navToggle = nav.querySelector("[data-action='nav-toggle']");
-		let navMenu = nav.querySelector('.nav-menu');
-		let navConnexion = nav.querySelector('.connexion-menu');
 
 		navToggle.addEventListener('click', () => {
 			if (nav.classList.contains('opened')) {
