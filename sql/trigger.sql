@@ -9,14 +9,14 @@ BEGIN
   RETURN nbPl-nbArtiste;
 END|
 
--- Le nombre de place de l'hebergement doit être supérieur ou égale au nombre d'artiste du groupe
+-- Le nombre de place de l'hebergement doit Ãªtre supÃ©rieur ou Ã©gale au nombre d'artiste du groupe
 
 CREATE OR REPLACE TRIGGER hebergement_nbPlaces_artiste_ajout BEFORE INSERT ON heberge FOR EACH ROW
 BEGIN
   DECLARE placesLibres INT;
   SELECT get_places_libres(new.idH, new.dateDebut, new.dateFin) INTO placesLibres;
   IF placesLibres < 0 THEN
-    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place de l''hebergement doit être supérieur ou égale au nombre d''artiste du groupe';
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place de l''hebergement doit Ãªtre supÃ©rieur ou Ã©gale au nombre d''artiste du groupe';
   END IF;
 END|
 
@@ -33,12 +33,12 @@ BEGIN
   WHILE NOT fini DO
     FETCH lesReservations INTO idH, nbPl, dateDeb, dateFin;
     IF NOT fini AND get_places_libres(idH, dateDeb, dateFin) < 1 THEN
-      SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place de l''hebergement doit être supérieur ou égale au nombre d''artiste du groupe';
+      SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place de l''hebergement doit Ãªtre supÃ©rieur ou Ã©gale au nombre d''artiste du groupe';
     END IF;
   END WHILE;
 END|
 
--- Le nombre de place du lieu de l'evenement doit être supérieur ou égale au nombre de visiteur qui assiste à l'évenement
+-- Le nombre de place du lieu de l'evenement doit Ãªtre supÃ©rieur ou Ã©gale au nombre de visiteur qui assiste Ã  l'Ã©venement
 
 CREATE OR REPLACE TRIGGER lieu_nbPlaces_visiteur BEFORE INSERT ON evenement FOR EACH ROW
 BEGIN
@@ -47,7 +47,7 @@ BEGIN
   SELECT COUNT(*) INTO nbVisiteur FROM s_inscrit WHERE idEv = new.idEv;
   SELECT nbPlaces INTO nbPl FROM lieu WHERE idL = new.idL;
   IF nbPl < nbVisiteur THEN
-    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place du lieu de l''evenement doit être supérieur ou égale au nombre de visiteur qui assiste à l''évenement';
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place du lieu de l''evenement doit Ãªtre supÃ©rieur ou Ã©gale au nombre de visiteur qui assiste Ã  l''Ã©venement';
   END IF;
 END|
 
@@ -58,7 +58,7 @@ BEGIN
   SELECT COUNT(*) INTO nbVisiteur FROM s_inscrit WHERE idEv = new.idEv;
   SELECT nbPlaces INTO nbPl FROM lieu WHERE idL = new.idL;
   IF nbPl < nbVisiteur THEN
-    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place du lieu de l''evenement doit être supérieur ou égale au nombre de visiteur qui assiste à l''évenement';
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place du lieu de l''evenement doit Ãªtre supÃ©rieur ou Ã©gale au nombre de visiteur qui assiste Ã  l''Ã©venement';
   END IF;
 END|
 
@@ -69,7 +69,7 @@ BEGIN
   SELECT COUNT(*) INTO nbVisiteur FROM s_inscrit WHERE idEv = new.idEv;
   SELECT nbPlaces INTO nbPl FROM lieu WHERE idL = (SELECT idL FROM evenement WHERE idEv = new.idEv);
   IF nbPl < nbVisiteur THEN
-    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place du lieu de l''evenement doit être supérieur ou égale au nombre de visiteur qui assiste à l''évenement';
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place du lieu de l''evenement doit Ãªtre supÃ©rieur ou Ã©gale au nombre de visiteur qui assiste Ã  l''Ã©venement';
   END IF;
 END|
 
@@ -80,18 +80,18 @@ BEGIN
   SELECT COUNT(*) INTO nbVisiteur FROM s_inscrit WHERE idEv = new.idEv;
   SELECT nbPlaces INTO nbPl FROM lieu WHERE idL = (SELECT idL FROM evenement WHERE idEv = new.idEv);
   IF nbPl < nbVisiteur THEN
-    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place du lieu de l''evenement doit être supérieur ou égale au nombre de visiteur qui assiste à l''évenement';
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de place du lieu de l''evenement doit Ãªtre supÃ©rieur ou Ã©gale au nombre de visiteur qui assiste Ã  l''Ã©venement';
   END IF;
 END|
 
--- Un groupe ne peux pas faire deux évenements au même dates 
+-- Un groupe ne peux pas faire deux Ã©venements au mÃªme dates 
 
 CREATE OR REPLACE TRIGGER evenement_date_groupe BEFORE INSERT ON evenement FOR EACH ROW
 BEGIN
   DECLARE nbEv INT;
   SELECT COUNT(*) INTO nbEv FROM evenement WHERE idG = new.idG AND (new.dateDebut BETWEEN dateDebut AND dateFin OR new.dateFin BETWEEN dateDebut AND dateFin);
   IF nbEv > 0 THEN
-    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un groupe ne peux pas faire deux évenements au même dates';
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un groupe ne peux pas faire deux Ã©venements au mÃªme dates';
   END IF;
 END|
 
@@ -100,18 +100,18 @@ BEGIN
   DECLARE nbEv INT;
   SELECT COUNT(*) INTO nbEv FROM evenement WHERE idG = new.idG AND (new.dateDebut BETWEEN dateDebut AND dateFin OR new.dateFin BETWEEN dateDebut AND dateFin);
   IF nbEv > 0 THEN
-    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un groupe ne peux pas faire deux évenements au même dates';
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un groupe ne peux pas faire deux Ã©venements au mÃªme dates';
   END IF;
 END|
 
--- 2 évenements ne doivent pas se chevaucher s'ils ont le même lieu.
+-- 2 Ã©venements ne doivent pas se chevaucher s'ils ont le mÃªme lieu.
 
 CREATE OR REPLACE TRIGGER evenement_date_lieu BEFORE INSERT ON evenement FOR EACH ROW
 BEGIN
   DECLARE nbEv INT;
   SELECT COUNT(*) INTO nbEv FROM evenement WHERE idL = new.idL AND (new.dateDebut BETWEEN dateDebut AND dateFin OR new.dateFin BETWEEN dateDebut AND dateFin);
   IF nbEv > 0 THEN
-    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '2 évenements ne doivent pas se chevaucher s''ils ont le même lieu.';
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '2 Ã©venements ne doivent pas se chevaucher s''ils ont le mÃªme lieu.';
   END IF;
 END|
 
@@ -120,7 +120,7 @@ BEGIN
   DECLARE nbEv INT;
   SELECT COUNT(*) INTO nbEv FROM evenement WHERE idL = new.idL AND (new.dateDebut BETWEEN dateDebut AND dateFin OR new.dateFin BETWEEN dateDebut AND dateFin);
   IF nbEv > 0 THEN
-    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '2 évenements ne doivent pas se chevaucher s''ils ont le même lieu.';
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '2 Ã©venements ne doivent pas se chevaucher s''ils ont le mÃªme lieu.';
   END IF;
 END|
 

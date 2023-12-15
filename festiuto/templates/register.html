@@ -1,39 +1,12 @@
 {% extends "base.html" %}
 
 {% block head %}
-<link rel="stylesheet" href="{{url_for('static', filename='login.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/register.css')}}">
 {% endblock %}
 
 
 {% block main %}
 
-<div class="container">
-    <div class="form-group section">
-        <h1>Login</h1>
-        <form method="POST" action="/login">
-                {{ form.csrf_token }}
-                <label for="username"><b>Username</b></label>
-                <input class="form-control" type="text" placeholder="Enter Username" name="username" required>
-                {% if form.username.errors %}
-                    <ul class="errors">
-                    {% for error in form.username.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                    </ul>
-                {% endif %}
-                <label for="password"><b>Password</b></label>
-                <input class="form-control" type="password" placeholder="Enter Password" name="password" required>
-                {% if form.password.errors %}
-                    <ul class="errors">
-                    {% for error in form.password.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                    </ul>
-                {% endif %}
-                <button class="btn btn-primary navb" type="submit">Login</button>
-                <a class="btn btn-link navb" href="{{ url_for('register')}}">Register</a>
-            </form>          
-    </div>
-</div>
+
 
 {% endblock %}
