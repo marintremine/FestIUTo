@@ -51,3 +51,8 @@ body .form-group a{
     margin-top: 1em;
     border-bottom: 1px solid #A5A5A5;
 }
+
+
+body .form-group a:hover{
+    border-bottom: 1px solid #F61353;
+}

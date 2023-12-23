@@ -8,5 +8,70 @@
 {% block main %}
 
 
+<div class="container">
+    <div class="form-group section">
+        
+        <form method="POST" action="/inscription">
+            <h1>INSCRIPTION</h1>
+            {{ form.csrf_token }}
+            <label for="firstname"><b>Prénom</b></label>
+            <input class="form-control" type="text" placeholder="Entrez le prénom" name="firstname" required>
+            {% if form.firstname.errors %}
+                <ul class="errors">
+                {% for error in form.firstname.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            <label for="lastname"><b>Nom de famille</b></label>
+            <input class="form-control" type="text" placeholder="Entrez le nom de famille" name="lastname" required>
+            {% if form.lastname.errors %}
+                <ul class="errors">
+                {% for error in form.lastname.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            <label for="password"><b>Mot de passe</b></label>
+            <input class="form-control" type="password" placeholder="Entrez le mot de passe" name="password" required>
+            {% if form.password.errors %}
+                <ul class="errors">
+                {% for error in form.password.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            <label for="email"><b>Email</b></label>
+            <input class="form-control" type="email" placeholder="Entrez l'email" name="email" required>
+            {% if form.email.errors %}
+                <ul class="errors">
+                {% for error in form.email.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            <label for="birthdate"><b>Date de naissance</b></label>
+            <input class="form-control" type="date" name="birthdate" required>
+            {% if form.birthdate.errors %}
+                <ul class="errors">
+                {% for error in form.birthdate.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            <label for="numtel"><b>Numéro de téléphone</b></label>
+            <input class="form-control" type="tel" placeholder="Entrez le numéro de téléphone" name="numtel" required>
+            {% if form.numtel.errors %}
+                <ul class="errors">
+                {% for error in form.numtel.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            <button class="btn btn-primary navb" type="submit">S'INSCRIRE</button>
+            <a class="btn btn-link navb" href="{{ url_for('connexion')}}">CONNEXION</a>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

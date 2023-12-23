@@ -13,8 +13,8 @@
         <form method="POST" action="/connexion">
                 <h1>CONNEXION</h1>
                 {{ form.csrf_token }}
-                <label for="email"><b>EMAIL</b></label>
-                <input class="form-control" type="text" placeholder="Enter email" name="email" required>
+                <label for="email"><b>Email</b></label>
+                <input class="form-control" type="text" placeholder="Entrez l'email" name="email" required>
                 {% if form.email.errors %}
                     <ul class="errors">
                     {% for error in form.email.errors %}
@@ -22,8 +22,8 @@
                     {% endfor %}
                     </ul>
                 {% endif %}
-                <label for="password"><b>MOT DE PASSE</b></label>
-                <input class="form-control" type="password" placeholder="Enter Password" name="password" required>
+                <label for="password"><b>Mot de passe</b></label>
+                <input class="form-control" type="password" placeholder="Entrez le mot de passe" name="password" required>
                 {% if form.password.errors %}
                     <ul class="errors">
                     {% for error in form.password.errors %}
