@@ -1,0 +1,12 @@
+quand on click sur un groupe -> pages details du groupe avec les infos du groupe (description, photos, membres, video)
+quand on click sur un artiste -> pages details de l'artiste avec les infos de l'artiste (instruments)
+
+Cascading Selects -> pour les suggestions de style en fonction du style choisie
+
+
+Modal Dialogs : pour le details
+
+
+
+bonus : 
+https://htmx.org/examples/update-other-content/ pour modifier le nom d'utilisateur du nav sans reload la page

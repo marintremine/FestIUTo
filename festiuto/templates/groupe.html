@@ -2,10 +2,138 @@
 {% block head %}
 
 <link rel="stylesheet" href="{{url_for('static', filename='css/groupe.css')}}">
-
+<script src="https://unpkg.com/htmx.org@1.9.9"></script>
 {% endblock %}
+
+
 {% block main %}
 
+
+
+<form hx-get="/groupe" hx-target="#results" hx-trigger="keyup changed delay:500ms from:#myinput, change from#style-select" id="recherche">
+    <input type="text" class="input" placeholder="Rechercher un groupe..." id="myinput" name="q" >
+    <select name="style" id="style-select">
+            <option value="all">Tous les styles</option>
+            {% if current_user.is_authenticated %}
+            <option value="fav">Mes favoris</option>
+            {% endif %}
+            {% for style in styles %}
+            <option value="{{style.nomS}}">{{style.nomS}}</option>
+            {% endfor %}
+    </select>
+</form>
+
+
+{% block results %}
+<div class="container" id="results">
+{% for groupe in groupes %}
+    <div class="box">
+        <div class="left">
+            {% for photo in photos %}
+                {% if photo.idG == groupe.idG and photo.pos == 1 %}
+                    <img src="{{ photo.urlPh }}" alt="{{groupe.nomG}}" width="100%" height="100%">
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="right">  
+            <div class="header">
+                <h3>
+                    {{groupe.nomG}}
+                </h3>
+                {% if current_user.is_authenticated %}
+                    {% for favori in favoris %}
+                        {% if favori.idV == current_user.idV %}
+                            {% if favori.idG == groupe.idG %}
+                                <div class="fas fa-star stars"></div>
+                            {% else %}
+                                <div class="far fa-star stars"></div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <p>
+                {{groupe.descriptionG}}
+            </p>
+            <ul class="style">
+            {% for poss in posseder %}
+                {% if poss.idG == groupe.idG %}
+
+                    {% for style in styles %}
+                        {% if style.idS_1 == poss.idS %}
+                            <li>{{style.nomS}}</li>
+                        {% endif %}
+                    {% endfor %}
+
+                {% endif %}
+            {% endfor %}
+            </ul>
+            <ul class="reseau">
+                {% for rs in lien_rs|sort(attribute='pos') %}
+                    {% if rs.idG == groupe.idG %}
+                            <!-- <p>{{rs.pseudo}}, {{rs.urlReseau }}, -->
+                            {% for reseau in reseau_social %}
+                                {% if reseau.idRs == rs.idRs %}
+                                    <li>
+                                        <a class="nav-link px-2"  target="_blank" href="{{rs.urlReseau }}">
+                                            {%if reseau.nomReseau == 'Facebook' %}
+                                                <i class="fab fa-facebook"></i>
+                                            {%endif%}
+                                            {%if reseau.nomReseau == 'X' %}
+                                                <i class="fab fa-twitter"></i>
+                                            {%endif%}
+                                            {%if reseau.nomReseau == 'Instagram' %}
+                                                <i class="fab fa-instagram"></i>
+                                            {%endif%}
+                                            {%if reseau.nomReseau == 'Youtube' %}
+                                                <i class="fab fa-youtube"></i>
+                                            {%endif%}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <button hx-get="/details/{{ groupe.idG }}" value="test" hx-target="body" hx-swap="beforeend">VOIR PLUS</button>
+        </div>
+<!-- 
+        {# <ul>
+        <h4>Artistes :</h4>
+        {% for artiste in artistes %}
+            {% if artiste.idG == groupe.idG %}
+                <li> - {{artiste.nomA}}</li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+        <ul>
+        <h4>Reseaux : </h4>
+        {% for rs in lien_rs|sort(attribute='pos') %}
+            {% if rs.idG == groupe.idG %}
+                <li>
+                    <p>{{rs.pseudo}} ,{{rs.pos}}, {{rs.urlReseau }},
+                    {% for reseau in reseau_social %}
+                        {% if reseau.idRs == rs.idRs %}
+                            {{reseau.nomReseau}}
+                        {% endif %}
+                    {% endfor %}
+                    </p>
+                </li>
+            {% endif %}
+        {% endfor %}
+        </ul> #} -->
+
+    </div>
+{% endfor %}
+</div>
+{% endblock %}
+
+
+<script>
+    function closeModal() {
+        document.getElementById('modal').remove()
+    }
+</script>
 
 
 {% endblock %}

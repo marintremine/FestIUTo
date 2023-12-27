@@ -1,0 +1,41 @@
+<div id="modal">
+	<div class="modal-underlay" onclick="closeModal()"></div>
+	<div class="modal-content">
+        <header>
+            <h2>{{ groupe.nomG }}</h2>
+            <button onclick="closeModal()"><span aria-hidden="true">&times;</span></button>
+        </header>
+
+        <h4>Artiste(s)</h4>
+        <ul>
+            {% for artiste in artistes %}
+                <li>
+                    {% if artiste.idG == groupe.idG %}
+                        {{artiste.nomA}} :
+                        {% for joue in jouer %}
+                            {% if joue.idA == artiste.idA %}
+                                {% for instrument in instruments %}
+                                    {% if instrument.idI == joue.idI %}
+                                        {{instrument.nomI}} 
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h4>Vidéo(s)</h4>
+        <ul>
+            {% for video in videos %}
+                <li>
+                    {% if video.idG == groupe.idG %}
+                        <iframe width="560" height="315" src="{{video.urlVideo}}" title="groupe.nomG" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+	</div>
+</div>
+

@@ -14,7 +14,7 @@
         <div><label>Email</label> : {{ current_user.email }}</div>
         <div><label>Date de naissance</label> : {{ current_user.dateNaissV }}</div>
         <div><label>Numero de telephone</label> : {{ current_user.numtel }}</div>
-        <button hx-get="/profil/edit" class="btn btn-primary">
+        <button hx-get="/profil" class="btn btn-primary">
         Editer mon profil
         </button>
     </div>
@@ -25,10 +25,10 @@
 {% block edit %}
 
 
-<form hx-post="/profil" hx-target="this" hx-swap="outerHTML" >
+<form action="/profil" method="POST" hx-target="this" hx-swap="outerHTML">
     {{ form.csrf_token }}
     <div>
-      {{ form.firstname.label }}
+        <label>Prénom</label> : 
       {{ form.firstname }}
     </div>
     {% if form.firstname.errors %}
@@ -39,7 +39,7 @@
         </ul>
     {% endif %}
     <div>
-      {{ form.lastname.label }}
+        <label>Nom de famille</label> : 
       {{ form.lastname }}
     </div>
     {% if form.lastname.errors %}
@@ -50,7 +50,7 @@
         </ul>
     {% endif %}
     <div>
-      {{ form.email.label }}
+        <label>Email</label> :
       {{ form.email }}
     </div>
     {% if form.email.errors %}
@@ -61,7 +61,7 @@
         </ul>
     {% endif %}
     <div>
-      {{ form.birthdate.label }}
+        <label>Date de naissance</label> :
       {{ form.birthdate }}
     </div>
     {% if form.birthdate.errors %}
@@ -72,7 +72,7 @@
         </ul>
     {% endif %}
     <div>
-      {{ form.numtel.label }}
+        <label>Numero de telephone</label> :
       {{ form.numtel }}
     </div>
     {% if form.numtel.errors %}
@@ -82,8 +82,8 @@
         {% endfor %}
         </ul>
     {% endif %}
-    <button class="btn">Submit</button>
-    <button class="btn" hx-get="/profil">Cancel</button>
+    <button class="btn">Mettre à jour</button>
+    <button class="btn" hx-post="/profil">Annuler</button>
 </form>
 {% endblock %}
 {% endif %}

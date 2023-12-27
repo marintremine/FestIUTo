@@ -1,5 +1,6 @@
 # Flask
 /__pycache__/
+/festiuto/__pycache__/
 /*.py[cod]
 /env/
 /.venv/
@@ -7,3 +8,5 @@
 /.flaskenv
 /.env.*
 /*.sqlite
+/*.pyc
+```
