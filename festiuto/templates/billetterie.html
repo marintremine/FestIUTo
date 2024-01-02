@@ -19,27 +19,14 @@
     <div>
         <h2>Types de billets disponibles :</h2>
         <ul class="ticket-container">
-            <li class="ticket-box">
-                <h3>Billet 1 jour</h3>
-                <p>10.00€</p>
-                <input type="date" value="2018-07-22" min="2018-01-01" max="2018-12-31">
-                <button type="button">Acheter</button>
-            </li>
-            <li class="ticket-box">
-                <h3>Billet 2 jours</h3>
-                <p>15.00€</p>
-                <button type="button">Acheter</button>
-            </li>
-            <li class="ticket-box">
-                <h3>Billet 3 jours</h3>
-                <p>20.00€</p>
-                <button type="button">Acheter</button>
-            </li>
-            <li class="ticket-box">
-                <h3>Billet saisonnier</h3>
-                <p>50.00€</p>
-                <button type="button">Acheter</button>
-            </li>
+            {% for type_billet in type_billets %}
+                <li class="ticket-box">
+                    <h3>{{type_billet.nomB}}</h3>
+                    <p>{{type_billet.prix}}€</p>
+                    <input type="date" value="{{ debut }}" min="{{ debut }}" max="{{ fin }}">
+                    <button type="button">Acheter</button>
+                </li>
+            {% endfor %}
         </ul>
     </div>
 </div>

@@ -60,6 +60,7 @@ main .container .box .right .header{
 
 main .container .box .right .header .stars{
     font-size: 23px;
+    cursor: pointer;
 }
 
 

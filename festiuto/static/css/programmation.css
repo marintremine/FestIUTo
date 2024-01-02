@@ -1,0 +1,32 @@
+/* Style du tableau */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Style des cellules du tableau */
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+/* Style de l'en-tête du tableau */
+th {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+/* Style des jours de la semaine */
+.weekday {
+    font-weight: bold;
+}
+
+/* Style des événements dans le tableau */
+.event {
+    background-color: #e6f7ff;
+}
+
+/* Style des heures dans le tableau */
+.time {
+    font-weight: bold;
+}

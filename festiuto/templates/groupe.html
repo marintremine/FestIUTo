@@ -10,7 +10,7 @@
 
 
 
-<form hx-get="/groupe" hx-target="#results" hx-trigger="keyup changed delay:500ms from:#myinput, change from#style-select" id="recherche">
+<form hx-get="/groupe" hx-target="#results" hx-trigger="keyup changed delay:500ms from:#myinput, change from:#style-select, myEvent from:document" id="recherche">
     <input type="text" class="input" placeholder="Rechercher un groupe..." id="myinput" name="q" >
     <select name="style" id="style-select">
             <option value="all">Tous les styles</option>
@@ -22,7 +22,6 @@
             {% endfor %}
     </select>
 </form>
-
 
 {% block results %}
 <div class="container" id="results">
@@ -41,15 +40,17 @@
                     {{groupe.nomG}}
                 </h3>
                 {% if current_user.is_authenticated %}
+                    {% set ns = namespace(found=false) %}
                     {% for favori in favoris %}
-                        {% if favori.idV == current_user.idV %}
-                            {% if favori.idG == groupe.idG %}
-                                <div class="fas fa-star stars"></div>
-                            {% else %}
-                                <div class="far fa-star stars"></div>
-                            {% endif %}
+                        {% if favori.idG == groupe.idG %}
+                            {% set ns.found = true %}
                         {% endif %}
                     {% endfor %}
+                    {% if ns.found %}
+                        <div hx-get="/unfav/{{groupe.idG}}" hx-trigger="click" hx-swap="outerHTML" id="divfav" > <div class="fas fa-star stars"></div></div>
+                    {% else %}
+                        <div hx-get="/fav/{{groupe.idG}}" hx-trigger="click" hx-swap="outerHTML" id="divfav" > <div class="far fa-star stars"></div></div>
+                    {% endif %}
                 {% endif %}
             </div>
             <p>
@@ -133,7 +134,21 @@
     function closeModal() {
         document.getElementById('modal').remove()
     }
+
+    document.addEventListener('htmx:afterRequest', function(evt) {
+        if (evt.detail.xhr.responseURL.includes('/unfav/')) {
+            htmx.trigger('#recherche', 'myEvent');
+        }
+    });
 </script>
 
 
+{% endblock %}
+
+{% block fav %}
+<div hx-get="/unfav/{{id}}" hx-trigger="click" hx-swap="outerHTML" id="divfav" > <div class="fas fa-star stars"></div></div>
+{% endblock %}
+
+{% block unfav %}
+<div hx-get="/fav/{{id}}" hx-trigger="click" hx-swap="outerHTML" id="divfav"> <div class="far fa-star stars"></div></div>
 {% endblock %}

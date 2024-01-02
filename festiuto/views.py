@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import make_response, render_template
 from .app import app, db, htmx, csrf
 from .forms import LoginForm, RegistrationForm, UpdateForm
 from flask import render_template, flash, redirect, url_for, request
@@ -7,7 +7,7 @@ from jinja2_fragments.flask import render_block
 
 
 
-from .models import Artiste, Favoris, Groupe, Instrument, Jouer, LienRS, Photo, Posseder, ReseauSocial, Style, Video, Visiteur
+from .models import Artiste, Evenement, Favoris, Groupe, Instrument, Jouer, LienRS, Photo, Posseder, ReseauSocial, Style, TypeBillet, Video, Visiteur
 
 
 @app.route('/')
@@ -18,11 +18,25 @@ def index():
 
 @app.route('/billetterie')
 def billetterie():
-    return render_template('billetterie.html',title='Billetterie')
+    evenements = db.session.query(Evenement).all()
+    debut = min(evenement.dateDebut.date() for evenement in evenements)
+    fin = max(evenement.dateFin.date() for evenement in evenements)
+    
+    type_billets = db.session.query(TypeBillet).all()
+    print(debut,fin)
+    return render_template('billetterie.html',title='Billetterie',type_billets=type_billets,debut=debut,fin=fin)
 
 @app.route('/programmation')
 def programmation():
-    return render_template('programmation.html',title='Programmation')
+    evenements = db.session.query(Evenement).all()
+    jours = []
+    for evenement in evenements:
+        if evenement.dateDebut.date() not in jours:
+            jours.append(evenement.dateDebut.date())
+        print(evenement.dateDebut.date())
+        print(type(evenement.dateDebut))
+
+    return render_template('programmation.html',title='Programmation',evenements=evenements,jours=jours)
 
 @app.route('/groupe')
 def groupe():
@@ -33,15 +47,21 @@ def groupe():
     lien_rs = db.session.query(LienRS).all()
     reseau_social = db.session.query(ReseauSocial).all()
     photos = db.session.query(Photo).all()
+
     favoris = db.session.query(Favoris).all()
 
+    if current_user.is_authenticated:
+        favoris = db.session.query(Favoris).filter(Favoris.idV == current_user.idV).all()
+        print(favoris)
     if htmx:
         q = request.args.get('q')
         style = request.args.get('style')
         if q:
             groupes = groupes.filter(Groupe.nomG.like("%"+q+"%"))
-        if style and style != "all":
+        if style and style != "all" and style != "fav":
             groupes = groupes.join(Posseder).join(Style).filter(Style.nomS.like("%"+style+"%"))
+        if style == "fav":
+            groupes = groupes.join(Favoris).filter(Favoris.idV == current_user.idV)
         groupes = groupes.all()
         return render_block("groupe.html", "results", groupes=groupes,styles=styles,artistes=artistes,posseder=posseder,lien_rs=lien_rs,reseau_social=reseau_social,photos=photos,favoris=favoris)
 
@@ -56,6 +76,23 @@ def search():
         groupes = db.session.query(Groupe).filter(Groupe.nomG.like("%"+q+"%")).all()
         return render_template('groupe.html',title='Groupe',groupes=groupes)
     return render_template('groupe.html.html',title='Groupe')
+
+@app.route('/fav/<int:id>')
+@login_required
+def fav(id):
+    favoris = Favoris(idV=current_user.idV, idG=id)
+    db.session.add(favoris)
+    db.session.commit()
+    return render_block("groupe.html", "fav", id=id)
+
+
+@app.route('/unfav/<int:id>')
+@login_required
+def unfav(id):
+    favoris = db.session.query(Favoris).filter(Favoris.idV == current_user.idV, Favoris.idG == id).first()
+    db.session.delete(favoris)
+    db.session.commit()
+    return render_block("groupe.html", "unfav", id=id)
 
 @app.route('/details/<int:id>')
 def details(id):
@@ -156,3 +193,11 @@ def logout():
     logout_user()
     flash("Vous avez été déconnecté.",'info')
     return redirect(url_for("index"))
+
+# @app.route("/admin")
+# @login_required
+# def admin():
+#     if current_user.admin:
+#         return render_template("admin.html", title="Admin")
+#     else:
+#         return redirect(url_for("index"))

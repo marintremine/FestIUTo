@@ -6,6 +6,37 @@
 {% endblock %}
 {% block main %}
 
+<h1>PROGRAMMATION</h1>
+
+<ul>
+    {% for jour in jours %}
+        <li>{{jour}}</li>
+    {% endfor %}
+</ul>
+
+<div class="container">
+    {% for jour in jours %}
+        <div class="jour">
+            <h2>{{jour}}</h2>
+            {% for evenement in evenements %}
+                {% if evenement.dateDebut.date() == jour %}
+                    <div class="evenement">
+                        <h3>{{evenement.descrEv}}</h3>
+                        <h4>{{evenement.dateDebut.time()}}</h4>
+                        <h4>{{evenement.dateFin.time()}}</h4>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+
+
+
+
+
+
 
 
 {% endblock %}

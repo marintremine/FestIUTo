@@ -50,6 +50,9 @@
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="{{url_for('profil')}}">Voir mon profil</a>
 						<a class="dropdown-item" href="#">Voir mes tickets</a>
+						{% if current_user.admin %}
+							<a class="dropdown-item" href="{{url_for('admin.index')}}">Administration</a>
+						{% endif %}
 						<a class="dropdown-item" href="{{url_for('logout')}}">Se déconnecter</a>
 					</div>
 				</div>
@@ -73,6 +76,9 @@
 
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="{{url_for('profil')}}">Voir mon profil</a>
+					{% if current_user.admin %}
+						<a class="dropdown-item" href="{{url_for('admin.index')}}">Administration</a>
+					{% endif %}
 					<a class="dropdown-item" href="#">Voir mes tickets</a>
 					<a class="dropdown-item" href="{{url_for('logout')}}">Se déconnecter</a>
 				</div>
