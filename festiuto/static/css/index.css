@@ -1,4 +1,7 @@
 
+section{
+    padding: 25px 50px;
+}
 
 section#section1{
     display: flex;
@@ -42,32 +45,70 @@ section#section1 .right h3{
     font-weight: 500;
 }
 
+section#image{
+    padding: 0;
+}
+
+section#image img{
+    width: 100%;
+}
+
 
 section#section2{
     display: flex;
-    justify-content: center;
+    
+    margin-bottom: 0;
+    flex-direction: column;
     align-items: center;
-    margin-top: 100px;
+}
+
+section#section2 h2{
+    text-align: center;
+    font-size: 3rem;
+}
+
+section#section2 h3{
+    margin-top: 1em;
+    width: 60%;
+    text-align: center;
 }
 
 
 
-section#section2 h1{
+/* section#section2 img{
+    width: 60%;
+} */
+
+section#image h6{
+    letter-spacing: -1px;
+    font-size: 200px;
+    background-size: cover;
+    background-clip: text; 
+    color: transparent;
+    font-weight: 900;
+    transform: scaleY(2);
+    text-align: center;
+    text-decoration: none;
+}
+
+
+/* section#section2 h6{
     background: url("https://c1.wallpaperflare.com/preview/448/284/997/dark-night-party-concert.jpg") repeat;
-    font-size: 500px;
+    font-size: 100px;
     font-family: 'Vina Sans', sans-serif;
     background-repeat: no-repeat;
     background-clip: text; 
     color: transparent;
     font-weight: 900; 
-    transform: translateY(-200px) scaleX(1.18);
+    transform: scale(5, 5);;
     text-align:justify;
+    letter-spacing: -1px;
 
-}
+} */
+
 
 
 section#section3 .container{
-    margin-top: 5em;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -116,4 +157,107 @@ section#section3 .container .box p{
     margin: 1em;
     margin-left: 0;
     color: #8b8b8b;
+}
+
+/* slider */
+
+
+.slider {
+    margin: 20px 0;
+    overflow: hidden;
+    position: relative;
+    left:0;
+    right: 100;
+    background: gainsboro;
+}
+
+.slider::before, .slider::after {
+    content: "";
+    position: absolute;
+    width: 330px;
+    z-index: 2;
+}
+.slider::after {
+    right: 0;
+    top: 0;
+    transform: rotateZ(180deg);
+}
+.slider::before {
+    left: 0;
+    top: 0;
+}
+.slider .slide-track {
+    animation: scroll 40s linear infinite;
+    display: flex;
+}
+.slider .slide {
+    color: black;
+    width: 330px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section#section4 ul{
+    
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+
+section#section4 .box{
+    width: 230px;
+    margin: 1em;
+}
+
+section#section4 .top img{
+    width: 100%;
+}
+
+section#section4 .bottom h3{
+    font-size: 1.5rem;
+    color: #FFF;
+}
+
+section#section4 .bottom .desc{
+    font-size: 0.8rem;
+    color: #858585;
+}
+
+section#section4 .bottom .datedeb{
+    font-size: 0.8rem;
+    color: #F61353;
+}
+
+
+section#section5 ul{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+section#section5 .box{
+    width: 230px;
+    margin: 1em;
+}
+
+section#section5 .top img{
+    width: 100%;
+}
+
+section#section5 .bottom h3{
+    font-size: 1.5rem;
+    color: #FFF;
+}
+
+section#section5 .bottom .desc{
+    font-size: 0.8rem;
+    color: #858585;
+}
+
+section#section5 .bottom .datedeb{
+    font-size: 0.8rem;
+    color: #F61353;
 }

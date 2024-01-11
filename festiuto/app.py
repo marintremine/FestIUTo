@@ -20,9 +20,9 @@ app = Flask(__name__)
 htmx = HTMX(app)
 
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://tremine:tremine@servinfo-maria:3306/DBtremine'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://tremine:tremine@servinfo-maria:3306/DBtremine'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://root:root@localhost:3306/festiuto'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://root@localhost:3306/festiuto'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://root@localhost:3306/festiuto'
 app.config['SECRET_KEY'] = 'iMQWPgaEP2WQQUxPvKiYiZoP5jaP5RdzGoE4msqtGFTJgSVKTwVH3SEUGsjRRTkFZMKqXKmCsAaEWbdjWJEb8ip2rNi4hCKezTxe5VVXfiAgDfYzdLRAEqf3dou8gGwr'
 
 
@@ -110,7 +110,7 @@ def admin():
 
     from .models import Visiteur, Artiste, Groupe, TypeBillet, Billet, Favoris, Hebergement, Heberge, Instrument, LienRS, Lieu, Photo, ReseauSocial, Jouer, Style, SInscrit, Posseder, Video, Evenement
 
-    app.config['FLASK_ADMIN_SWATCH'] = 'Darkly'
+    # app.config['FLASK_ADMIN_SWATCH'] = 'Darkly'
     admin = Admin(app, name='Tableau de bord',index_view=myAdminIndexView(), template_mode='bootstrap3')
 
 

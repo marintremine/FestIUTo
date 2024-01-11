@@ -7,13 +7,44 @@ from jinja2_fragments.flask import render_block
 
 
 
-from .models import Artiste, Evenement, Favoris, Groupe, Instrument, Jouer, LienRS, Photo, Posseder, ReseauSocial, Style, TypeBillet, Video, Visiteur
+from .models import Artiste, Evenement, Favoris, Groupe, Instrument, Jouer, LienRS, Lieu, Photo, Posseder, ReseauSocial, Style, TypeBillet, Video, Visiteur
 
 
 @app.route('/')
 def index():
-    
-    return render_template('index.html',title='FestiIUTo')
+    evenements = db.session.query(Evenement).all()
+    jours = []
+    for evenement in evenements:
+        if evenement.dateDebut.date() not in jours:
+            jours.append(evenement.dateDebut.date())
+    groupes = db.session.query(Groupe).all()
+
+
+    favoris = db.session.query(Favoris).all()
+    if current_user.is_authenticated:
+        favoris = db.session.query(Favoris).filter(Favoris.idV == current_user.idV).all()
+
+
+    posseder = db.session.query(Posseder).all()
+    styles = db.session.query(Style).all()
+
+    evenements = db.session.query(Evenement).all()
+    photos = db.session.query(Photo).all()
+    groupes_propositions = set()
+
+    for groupe in groupes:
+        for favori in favoris:
+            if groupe.idG == favori.idG:
+                for poss in posseder:
+                    if groupe.idG == poss.idG:
+                        print("Style des groupes pref :", poss.idS)
+                        for groupe2 in groupes:
+                            for poss2 in posseder:
+                                if groupe2.idG == poss2.idG:
+                                    if poss.idS == poss2.idS:
+                                        groupes_propositions.add(groupe2)
+
+    return render_template('index.html',title='FestiIUTo',groupes=groupes,jours=jours, favoris=favoris,styles=styles, groupes_propositions=groupes_propositions, evenements=evenements,photos=photos)
 
 
 @app.route('/billetterie')
@@ -29,6 +60,7 @@ def billetterie():
 @app.route('/programmation')
 def programmation():
     evenements = db.session.query(Evenement).all()
+    lieux = db.session.query(Lieu).all()
     jours = []
     for evenement in evenements:
         if evenement.dateDebut.date() not in jours:
@@ -36,7 +68,7 @@ def programmation():
         print(evenement.dateDebut.date())
         print(type(evenement.dateDebut))
 
-    return render_template('programmation.html',title='Programmation',evenements=evenements,jours=jours)
+    return render_template('programmation.html',title='Programmation',evenements=evenements,jours=jours, lieux=lieux)
 
 @app.route('/groupe')
 def groupe():
@@ -103,10 +135,6 @@ def details(id):
     jouer = db.session.query(Jouer).all()
     return render_template('details.html',title='Details', groupe=groupe,artistes=artistes,videos=videos,instruments=instruments,jouer=jouer)
 
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html',title='Contact')
 
 @app.route('/connexion',methods=["POST","GET"])
 def connexion():

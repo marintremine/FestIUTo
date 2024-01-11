@@ -29,6 +29,7 @@ footer .container ul li{
 
 footer .container ul li:hover{
     color: #fff;
+    cursor: pointer;
 }
 
 footer .container ul li:nth-child(1){

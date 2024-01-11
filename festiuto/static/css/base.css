@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Vina+Sans&display=swap');
 
 
+
+
 *{
     margin: 0;
     padding: 0;
@@ -18,7 +20,7 @@ body{
 
 main{
     margin-top: 90px; /* nav height */
-    padding: 100px 50px;
+    /* padding: 100px 50px; */
 }
 
 section#intersection{
@@ -31,7 +33,7 @@ section#intersection .title{
 }
 
 section#intersection .ligne{
-    background-color: #A5A5A5;
+    background-color: #818181;
     flex-grow: 1;
     height: 3px;
     border-radius: 25px;

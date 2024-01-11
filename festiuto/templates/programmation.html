@@ -16,14 +16,24 @@
 
 <div class="container">
     {% for jour in jours %}
-        <div class="jour">
-            <h2>{{jour}}</h2>
+        <div class="jour" id="{{jour}}">
+            <section id="intersection">
+                <h3 class="title">{{jour}}</h3>
+                <div class="ligne"></div>
+            </section>
             {% for evenement in evenements %}
                 {% if evenement.dateDebut.date() == jour %}
                     <div class="evenement">
                         <h3>{{evenement.descrEv}}</h3>
                         <h4>{{evenement.dateDebut.time()}}</h4>
                         <h4>{{evenement.dateFin.time()}}</h4>
+                        <h4>{{evenement.gratuit}}</h4>
+                        {% for lieu in lieux %}
+                            {% if evenement.idL == lieu.idL %}
+                                <h4>{{lieu.nomLieu}}</h4>
+                                <h4>{{lieu.nbPlaces}}</h4>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 {% endif %}
             {% endfor %}
