@@ -2,6 +2,7 @@
 FestiIUTo
 """
 
+
 from flask_login import LoginManager, current_user, login_required
 from flask import Flask, flash, redirect, request, url_for
 from flask_htmx import HTMX
@@ -12,6 +13,7 @@ from flask_admin import Admin, AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
 from sqlalchemy import inspect
 
+import locale
 
 
 
@@ -19,12 +21,12 @@ from sqlalchemy import inspect
 app = Flask(__name__)
 htmx = HTMX(app)
 
+locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://tremine:tremine@servinfo-maria:3306/DBtremine'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://root:root@localhost:3306/festiuto'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://root@localhost:3306/festiuto'
 app.config['SECRET_KEY'] = 'iMQWPgaEP2WQQUxPvKiYiZoP5jaP5RdzGoE4msqtGFTJgSVKTwVH3SEUGsjRRTkFZMKqXKmCsAaEWbdjWJEb8ip2rNi4hCKezTxe5VVXfiAgDfYzdLRAEqf3dou8gGwr'
-
 
 
 db: SQLAlchemy = SQLAlchemy(app)
@@ -161,3 +163,6 @@ def initdb_command():
     """Creates the database tables."""
     db.create_all()
     print("Initialized the database.")
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.9", port=8080, debug=True)

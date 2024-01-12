@@ -67,8 +67,10 @@ def programmation():
             jours.append(evenement.dateDebut.date())
         print(evenement.dateDebut.date())
         print(type(evenement.dateDebut))
+    
+    photos = db.session.query(Photo).all()
 
-    return render_template('programmation.html',title='Programmation',evenements=evenements,jours=jours, lieux=lieux)
+    return render_template('programmation.html',title='Programmation',evenements=evenements,jours=jours, lieux=lieux,photos=photos)
 
 @app.route('/groupe')
 def groupe():

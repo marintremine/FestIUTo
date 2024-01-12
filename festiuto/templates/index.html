@@ -136,7 +136,7 @@
                                 {% for evenement in evenements %}
                                     {% if evenement.idG == groupe.idG %}
                                         <h4 class="desc">{{ evenement.descrEv }}</h4>
-                                        <h4 class="datedeb">{{ evenement.dateDebut.date() }}</h4>
+                                        <h4 class="datedeb">{{ evenement.dateDebut.strftime('%A %d %B') }}</h4>
                                     {% endif %}
                                 {% endfor %}
                             </div>
@@ -171,7 +171,7 @@
                     {% for evenement in evenements %}
                         {% if evenement.idG == groupe.idG %}
                             <h4 class="desc">{{ evenement.descrEv }}</h4>
-                            <h4 class="datedeb">{{ evenement.dateDebut.date() }}</h4>
+                            <h4 class="datedeb">{{ evenement.dateDebut.strftime('%A %d %B') }}</h4>
                         {% endif %}
                     {% endfor %}
                 </div>

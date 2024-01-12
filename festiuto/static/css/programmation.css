@@ -1,32 +1,109 @@
-/* Style du tableau */
-table {
+/* Styles for the heading */
+h1.title {
+    color: #ffffff;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+/* Styles for the navigation links */
+ul.navprog {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+
+}
+ul.navprog li {
+    margin: 25px;
+    margin-left: 0;
+    font-size: 25px;
+    
+}
+
+ul.navprog li a {
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffffff;
+    transition: 0.1s ease;
+    border-bottom: 1px solid #ffffff;
+}
+
+ul.navprog li a:hover {
+    color: #F61353; 
+    border-bottom: 1px solid #F61353;
+}
+
+
+section{
+    padding: 25px 50px;
+}
+
+/* Styles for the container */
+.container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container .box{
+    margin: 1em;
+    background-color: #333333;
+    padding: 5px;
+    border: #F61353 solid 2px;
+    transition: 0.2s ease;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container .box:hover{
+    background-color: #F61353;
+
+}
+
+
+.container .box .top{
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-    border-collapse: collapse;
 }
 
-/* Style des cellules du tableau */
-td {
-    border: 1px solid #ccc;
-    padding: 8px;
+.container .box .center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    width: 60%;
 }
 
-/* Style de l'en-tête du tableau */
-th {
-    border: 1px solid #ccc;
-    padding: 8px;
+.container .box .bottom{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
-/* Style des jours de la semaine */
-.weekday {
-    font-weight: bold;
+
+.container .box h3.descr{
+    color: #ffffff;
+    font-size: 20px;
 }
 
-/* Style des événements dans le tableau */
-.event {
-    background-color: #e6f7ff;
+.container .box h4.horaire{
+
 }
 
-/* Style des heures dans le tableau */
-.time {
-    font-weight: bold;
+
+
+
+.container .box h4.lieu{
+
 }
+
+.container .box h4.prix{
+
+}
+

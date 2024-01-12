@@ -5,41 +5,61 @@
 
 {% endblock %}
 {% block main %}
+    <section>
+        <h1 class="title">PROGRAMMATION</h1>
 
-<h1>PROGRAMMATION</h1>
-
-<ul>
-    {% for jour in jours %}
-        <li>{{jour}}</li>
-    {% endfor %}
-</ul>
-
-<div class="container">
-    {% for jour in jours %}
-        <div class="jour" id="{{jour}}">
-            <section id="intersection">
-                <h3 class="title">{{jour}}</h3>
-                <div class="ligne"></div>
-            </section>
-            {% for evenement in evenements %}
-                {% if evenement.dateDebut.date() == jour %}
-                    <div class="evenement">
-                        <h3>{{evenement.descrEv}}</h3>
-                        <h4>{{evenement.dateDebut.time()}}</h4>
-                        <h4>{{evenement.dateFin.time()}}</h4>
-                        <h4>{{evenement.gratuit}}</h4>
-                        {% for lieu in lieux %}
-                            {% if evenement.idL == lieu.idL %}
-                                <h4>{{lieu.nomLieu}}</h4>
-                                <h4>{{lieu.nbPlaces}}</h4>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                {% endif %}
+        <ul class="navprog">
+            {% for jour in jours %}
+                <li><a href="#{{jour}}">{{jour.strftime('%A %d %B').upper()}}</a></li>
             {% endfor %}
-        </div>
+        </ul>
+    </section>
+
+    {% for jour in jours %}
+    <section id="intersection">
+        <h3 class="title">{{jour.strftime('%A %d %B').upper()}}</h3>
+        <div class="ligne"></div>
+    </section>
+
+
+    <section class="container">
+        
+            {% for evenement in evenements %}
+                
+                {% if evenement.dateDebut.date() == jour %}
+                <div class="jour box" id="{{jour}}">
+                    
+                    
+
+                    {% for lieu in lieux %}
+                        {% if evenement.idL == lieu.idL %}
+                            <div class="top">
+                                <h4 class="horaire">{{evenement.dateDebut.strftime('%H:%M')}}</h4>
+                                <h4 class="lieu">{{lieu.nomLieu}}</h4>
+                            </div>
+                            <div class="center">
+                                <h3 class="descr">{{evenement.descrEv}}</h3>
+                            </div>
+                            <div class="bottom">
+                                {% if evenement.gratuit %}
+                                    <h4 class="prix">GRATUIT</h4>
+                                {% else %}
+                                    <h4 class="prix">PAYANT</h4>
+                                {% endif %}
+                                <h4 class="places">{{lieu.nbPlaces}} places</h4>
+                            </div>
+                            
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+            {% endfor %}
+
+    </section>
     {% endfor %}
-</div>
+
+
 
 
 

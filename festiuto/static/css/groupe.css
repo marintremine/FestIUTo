@@ -1,4 +1,9 @@
 
+
+form#recherche{
+    padding: 25px 50px;
+}
+
 main #recherche{
     display: flex;
     margin: 0 50px;
