@@ -6,7 +6,7 @@ import argon2
 ph = argon2.PasswordHasher()
 
 class Artiste(db.Model):
-    idA = db.Column(db.Integer, primary_key=True)
+    idA = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nomA = db.Column(db.String(50))
     prenomA = db.Column(db.String(50))
     dateNaissA = db.Column(db.Date)
@@ -18,7 +18,7 @@ class Artiste(db.Model):
         return f"<Artisteimport argon2 ida={self.idA} noma={self.nomA} prenoma={self.prenomA} dateNaissA={self.dateNaissA} idG={self.idG}>"
 
 class TypeBillet(db.Model):
-    idTb = db.Column(db.Integer, primary_key=True)
+    idTb = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nomB = db.Column(db.String(50))
     prix = db.Column(db.DECIMAL(5, 2))
     duree = db.Column(db.Integer)
@@ -28,7 +28,7 @@ class TypeBillet(db.Model):
         return f"<TypeBillet idTb={self.idTb} nomB={self.nomB} prix={self.prix} duree={self.duree}>"
 
 class Billet(db.Model):
-    idB = db.Column(db.Integer, primary_key=True)
+    idB = db.Column(db.Integer, primary_key=True, autoincrement=True)
     dateDebutValidite = db.Column(db.Date)
     idV = db.Column(db.Integer, db.ForeignKey('visiteur.idV'), nullable=False)
     idTb = db.Column(db.Integer, db.ForeignKey('type_billet.idTb'), nullable=False)
@@ -50,7 +50,7 @@ class Favoris(db.Model):
 
 
 class Groupe(db.Model):
-    idG = db.Column(db.String(42), primary_key=True)
+    idG = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nomG = db.Column(db.String(42))
     descriptionG = db.Column(db.String(42)) 
     def __repr__(self):
@@ -81,7 +81,7 @@ class Heberge(db.Model):
 
 
 class Instrument(db.Model):
-    idI = db.Column(db.Integer, primary_key=True)
+    idI = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nomI = db.Column(db.String(80))
 
     def __repr__(self):
@@ -105,7 +105,7 @@ class LienRS(db.Model):
 
 
 class Lieu(db.Model):
-    idL = db.Column(db.Integer, primary_key=True)
+    idL = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nomLieu = db.Column(db.String(80))
     nbPlaces = db.Column(db.Integer)
 
@@ -114,7 +114,7 @@ class Lieu(db.Model):
 
 
 class Photo(db.Model):
-    idPh = db.Column(db.Integer, primary_key=True)
+    idPh = db.Column(db.Integer, primary_key=True, autoincrement=True)
     urlPh = db.Column(db.String(200))
     pos = db.Column(db.Integer)
     idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), nullable=False)
@@ -126,7 +126,7 @@ class Photo(db.Model):
 
 
 class ReseauSocial(db.Model):
-    idRs = db.Column(db.Integer, primary_key=True)
+    idRs = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nomReseau = db.Column(db.String(50))
     urlLogoReseau = db.Column(db.String(200))
 
@@ -142,7 +142,7 @@ class Jouer(db.Model):
 
 
 class Style(db.Model):
-    idS_1 = db.Column(db.Integer, primary_key=True)
+    idS_1 = db.Column(db.Integer, primary_key=True, autoincrement=True)
     idS_2 = db.Column(db.Integer, db.ForeignKey("style.idS_1", ondelete="CASCADE", onupdate="CASCADE"))
     nomS = db.Column(db.String(280))
 
@@ -169,7 +169,7 @@ class Posseder(db.Model):
 
 
 class Video(db.Model):
-    idVideo = db.Column(db.Integer, primary_key=True)
+    idVideo = db.Column(db.Integer, primary_key=True, autoincrement=True)
     urlVideo = db.Column(db.String(200))
     idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), nullable=False)
     pos = db.Column(db.Integer)
@@ -188,7 +188,7 @@ class SInscrit(db.Model):
 
 
 class Visiteur(db.Model):
-    idV = db.Column(db.Integer, primary_key=True)
+    idV = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nomV = db.Column(db.String(50))
     prenomV = db.Column(db.String(50))
     dateNaissV = db.Column(db.Date)
@@ -245,7 +245,7 @@ def load_user(user_id):
     return Visiteur.query.get(int(user_id))
 
 class Evenement(db.Model):
-    idEv = db.Column(db.Integer, primary_key=True)
+    idEv = db.Column(db.Integer, primary_key=True, autoincrement=True)
     typeEv = db.Column(db.String(80))
     descrEv = db.Column(db.String(200))
     tempsMontage = db.Column(db.Time)

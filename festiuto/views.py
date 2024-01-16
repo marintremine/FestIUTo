@@ -81,7 +81,7 @@ def groupe():
     lien_rs = db.session.query(LienRS).all()
     reseau_social = db.session.query(ReseauSocial).all()
     photos = db.session.query(Photo).all()
-
+    suggestions = []
     favoris = db.session.query(Favoris).all()
 
     if current_user.is_authenticated:
@@ -94,10 +94,12 @@ def groupe():
             groupes = groupes.filter(Groupe.nomG.like("%"+q+"%"))
         if style and style != "all" and style != "fav":
             groupes = groupes.join(Posseder).join(Style).filter(Style.nomS.like("%"+style+"%"))
+            suggestions = db.session.query(Style).filter(Style.idS_2 == db.session.query(Style).filter(Style.nomS == style).first().idS_1).all()
+            print(suggestions)
         if style == "fav":
             groupes = groupes.join(Favoris).filter(Favoris.idV == current_user.idV)
         groupes = groupes.all()
-        return render_block("groupe.html", "results", groupes=groupes,styles=styles,artistes=artistes,posseder=posseder,lien_rs=lien_rs,reseau_social=reseau_social,photos=photos,favoris=favoris)
+        return render_block("groupe.html", "results", groupes=groupes,styles=styles,artistes=artistes,posseder=posseder,lien_rs=lien_rs,reseau_social=reseau_social,photos=photos,favoris=favoris,suggestions=suggestions)
 
     groupes = groupes.all()
     return render_template('groupe.html',title='Groupe',groupes=groupes,styles=styles,artistes=artistes,posseder=posseder,lien_rs=lien_rs,reseau_social=reseau_social,photos=photos,favoris=favoris)

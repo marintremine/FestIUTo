@@ -1,12 +1,11 @@
 
 
 form#recherche{
-    padding: 25px 50px;
+    padding: 25px 100px;
 }
 
 main #recherche{
     display: flex;
-    margin: 0 50px;
 } 
 
 main #recherche .input{
@@ -22,10 +21,26 @@ main #recherche .input:focus {
 }
 
 
+main ul.suggestion{
+    display: flex;
+    margin: 0 100px;
+    align-items: center;
+}
+
+main ul.suggestion li{
+    margin: 0 10px;
+    padding: 5px 10px;
+    border: 1px solid #ffffff;
+    border-radius: 25px;
+    color: #ffffff;
+    font-size: 15px;
+}
+
 main .container{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin: 0 50px;
 }
 
 main .container .box{
