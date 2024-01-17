@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/billets.css')}}">
+{% endblock %}
+{% block main %}
+
+<h1>Mes billets :</h1>
+
+{% for billet in billets %}
+    {% for type_billet in type_billets %}
+        {% if billet.idTb == type_billet.idTb %}
+            <h1>{{type_billet.nomB}}</h1>
+            {% if type_billet.duree == None %}
+                <h1>Tous le festival</h1>
+            {% else %}
+                <h1>{{type_billet.duree}} jours</h1>
+            {% endif %}
+            <h1>{{type_billet.prix}} euros</h1>
+            <h1>{{billet.dateDebutValidite}}</h1>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% endblock %}
