@@ -199,20 +199,24 @@ INSERT INTO video (idVideo, urlVideo, idG, pos) VALUES
   (6, 'https://www.youtube.com/watch?v=aKd6yarfkxA', 6, 1),
   (7, 'https://www.youtube.com/watch?v=s37x2VSZrLw', 7, 1);
 
-INSERT INTO photo (idPh, urlPh, idG, pos) VALUES
-  (1, 'https://upload.wikimedia.org/wikipedia/commons/b/be/PinkFloyd1973_retouched.jpg', 1, 1),
-  (2, 'https://upload.wikimedia.org/wikipedia/commons/b/be/PinkFloyd1973_retouched.jpg', 2, 1),
-  (3, 'https://upload.wikimedia.org/wikipedia/commons/d/d8/The_Beatles_members_at_New_York_City_in_1964.jpg', 3, 1),
-  (4, 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Rolling_Stones_onstage_at_Summerfest_2015.jpg', 4, 1),
-  (5, 'https://upload.wikimedia.org/wikipedia/commons/9/92/Who_-_1975.jpg', 5, 1),
-  (6, 'https://upload.wikimedia.org/wikipedia/commons/6/60/Doors_electra_publicity_photo.JPG', 6, 1),
-  (7, 'hhttps://upload.wikimedia.org/wikipedia/commons/a/a0/The_Weeknd_Portrait_by_Brian_Ziff.jpg', 7, 1);
+
+INSERT INTO photo (idPh, urlPh, pos, idG) VALUES(1, 'https://static.printler.com/cache/f/4/8/e/f/2/f48ef2e0a66f418305234b1ed4b8310529d72bae.jpg', 1, '1');
+INSERT INTO photo (idPh, urlPh, pos, idG) VALUES(2, 'https://img.nrj.fr/-I_CLcqGR7_zjWmLMbjRKI0ZKqY=/http%3A%2F%2Fmedia.nostalgie.fr%2F1900x1200%2F2017%2F02%2Fpinkfloyd-jpg-3153981.jpg', 1, '2');
+INSERT INTO photo (idPh, urlPh, pos, idG) VALUES(3, 'https://pbs.twimg.com/media/F-sMa1La0AA-pBK.jpg', 1, '3');
+INSERT INTO photo (idPh, urlPh, pos, idG) VALUES(4, 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Rolling_Stones_onstage_at_Summerfest_2015.jpg', 1, '4');
+INSERT INTO photo (idPh, urlPh, pos, idG) VALUES(5, 'https://cdns-images.dzcdn.net/images/artist/079cce2a1a5ae11bda17f026b4e74334/500x500.jpg', 1, '5');
+INSERT INTO photo (idPh, urlPh, pos, idG) VALUES(6, 'https://upload.wikimedia.org/wikipedia/commons/6/60/Doors_electra_publicity_photo.JPG', 1, '6');
+INSERT INTO photo (idPh, urlPh, pos, idG) VALUES(7, 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/The_Weeknd_Portrait_by_Brian_Ziff.jpg/1200px-The_Weeknd_Portrait_by_Brian_Ziff.jpg', 1, '7');
+
 INSERT INTO visiteur (idV, nomV, prenomV, dateNaissV, numtel, email, motdepasse, admin) VALUES
   (1, 'Rosse', 'Julien', '2004-02-06', '0606060606', 'contact@julienrosse.fr', '$argon2id$v=19$m=65536,t=3,p=4$/9b7IKIFHeJNPNDyVQmUOg$NY9EaMDqPhT319WoU+HJvsBzjRVCcg2B2uPltRT8KBU', 1),
   (2, 'Tremine', 'Marin', '2004-03-18', '0642789024', 'marin@marin.tech', '$argon2id$v=19$m=65536,t=3,p=4$pYvKZCaWHRwnXIRAAtCR3Q$VnCno4KsFOwpuDCbF01gsBYk62bhJ65CK3Hj4l+C2hQ', 1),
   (3, 'Bouvet', 'Alexandre', '2004-04-10', '0634567890', 'balex@gmail.test', '$argon2id$v=19$m=65536,t=3,p=4$0Z3Z3Z3Z3Z', 0),
   (4, 'Girard', 'Mathis', '2004-05-25', '0600000000', 'hfeuioshiu@fei.copm', '$argon2id$v=19$m=65536,t=3,p=4$0Z3Z3Z3Z3Z', 0),
   (5, 'Le Roux', 'Louis', '2004-06-12', '03438973489', 'fheiushfies@fehsku.ej', '$argon2id$v=19$m=65536,t=3,p=4$0Z3Z3Z3Z3Z', 0);
+
+INSERT INTO visiteur (idV, nomV, prenomV, dateNaissV, numtel, email, motdepasse, admin) VALUES(6, 'Admin', 'Admin', '2000-01-01', '0000000000', 'admin@festiuto.fr', '$argon2id$v=19$m=65536,t=3,p=4$ZH5xMnyCRPxUa6p4AfukBg$R/3k+d593IAtRG64d+z55t489Zw858RHzUHAO1ZK860', 1);
+INSERT INTO visiteur (idV, nomV, prenomV, dateNaissV, numtel, email, motdepasse, admin) VALUES(8, 'TREMINE', 'Marin', '2004-09-16', '0781371307', 'extrayer.dev@gmail.com', '$argon2id$v=19$m=65536,t=3,p=4$3ak+VL4JkZuoJ0I2T0DTGA$pao096F5vePluJVcyYK95plf+KhjqAOKeW8hEB0/zBk', NULL);
 
 INSERT INTO favoris (idG, idV) VALUES
   (1, 1),

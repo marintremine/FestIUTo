@@ -1,21 +1,27 @@
-
-from base64 import b64encode
 from .app import db,login_manager
 import argon2
 
 ph = argon2.PasswordHasher()
+
+class Groupe(db.Model):
+    idG = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nomG = db.Column(db.String(42))
+    descriptionG = db.Column(db.String(42)) 
+    def __repr__(self):
+        return f"<Groupe idG={self.idG} nomG={self.nomG} descriptionG={self.descriptionG}>"
+
 
 class Artiste(db.Model):
     idA = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nomA = db.Column(db.String(50))
     prenomA = db.Column(db.String(50))
     dateNaissA = db.Column(db.Date)
-    idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), nullable=False)
+    idG = db.Column(db.Integer, db.ForeignKey('groupe.idG'), nullable=False)
     
     groupe = db.relationship('Groupe', backref='artistes')
 
     def __repr__(self):
-        return f"<Artisteimport argon2 ida={self.idA} noma={self.nomA} prenoma={self.prenomA} dateNaissA={self.dateNaissA} idG={self.idG}>"
+        return f"<Artiste ida={self.idA} noma={self.nomA} prenoma={self.prenomA} dateNaissA={self.dateNaissA} idG={self.idG}>"
 
 class TypeBillet(db.Model):
     idTb = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -42,34 +48,29 @@ class Billet(db.Model):
 
 
 class Favoris(db.Model):
-    idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), primary_key=True, nullable=False)
-    idV = db.Column(db.Integer, db.ForeignKey('visiteur.idV'), primary_key=True, nullable=False)
+    idG = db.Column(db.Integer, db.ForeignKey('groupe.idG'), primary_key=True)
+    idV = db.Column(db.Integer, db.ForeignKey('visiteur.idV'), primary_key=True)
 
     groupe = db.relationship('Groupe', backref='favoris')
     visiteur = db.relationship('Visiteur', backref='favoris')
 
 
-class Groupe(db.Model):
-    idG = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nomG = db.Column(db.String(42))
-    descriptionG = db.Column(db.String(42)) 
-    def __repr__(self):
-        return f"<Groupe idG={self.idG} nomG={self.nomG} descriptionG={self.descriptionG}>"
+
 
 
 class Hebergement(db.Model):
-    idH = db.Column(db.Integer, primary_key=True)
+    idH = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nomHebergement = db.Column(db.String(50))
     addresse = db.Column(db.String(200))
     nbPlaces = db.Column(db.Integer)
 
     def __repr__(self):
-        return f"<Hebergement idH={self.idH} nomHebergement={self.nomH} addresse={self.addresse} nbPlaces={self.nbPlaces}>"
+        return f"<Hebergement idH={self.idH} nomHebergement={self.nomHebergement} addresse={self.addresse} nbPlaces={self.nbPlaces}>"
 
 
 class Heberge(db.Model):
-    idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), primary_key=True, nullable=False)
-    idH = db.Column(db.Integer, db.ForeignKey('hebergement.idH'), primary_key=True, nullable=False)
+    idG = db.Column(db.Integer, db.ForeignKey('groupe.idG'), primary_key=True)
+    idH = db.Column(db.Integer, db.ForeignKey('hebergement.idH'), primary_key=True)
     dateDebut = db.Column(db.Date)
     dateFin = db.Column(db.Date)
 
@@ -89,8 +90,8 @@ class Instrument(db.Model):
 
 
 class LienRS(db.Model):
-    idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), primary_key=True, nullable=False)
-    idRs = db.Column(db.Integer, db.ForeignKey('reseau_social.idRs'), nullable=False, primary_key=True)
+    idG = db.Column(db.Integer, db.ForeignKey('groupe.idG'), primary_key=True)
+    idRs = db.Column(db.Integer, db.ForeignKey('reseau_social.idRs'), primary_key=True)
     pos = db.Column(db.Integer)
     pseudo = db.Column(db.String(80))
     urlReseau = db.Column(db.String(200))
@@ -117,7 +118,7 @@ class Photo(db.Model):
     idPh = db.Column(db.Integer, primary_key=True, autoincrement=True)
     urlPh = db.Column(db.String(200))
     pos = db.Column(db.Integer)
-    idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), nullable=False)
+    idG = db.Column(db.Integer, db.ForeignKey('groupe.idG'), nullable=False)
 
     groupe = db.relationship('Groupe', backref='photo')
 
@@ -134,11 +135,11 @@ class ReseauSocial(db.Model):
         return f"<ReseauSocial idRs={self.idRs} nomReseau={self.nomReseau} urlLogoReseau={self.urlLogoReseau}>"
     
 class Jouer(db.Model):
-    idI = db.Column(db.Integer, db.ForeignKey('instrument.idI'), primary_key=True, nullable=False)
-    idA = db.Column(db.Integer, db.ForeignKey('artiste.idA'), primary_key=True, nullable=False)
+    idI = db.Column(db.Integer, db.ForeignKey('instrument.idI'), primary_key=True)
+    idA = db.Column(db.Integer, db.ForeignKey('artiste.idA'), primary_key=True)
 
-    instrument = db.relationship('Instrument', backref='joueurs')
-    artiste = db.relationship('Artiste', backref='instruments')
+    instrument = db.relationship('Instrument', backref='jouer')
+    artiste = db.relationship('Artiste', backref='jouer')
 
 
 class Style(db.Model):
@@ -161,30 +162,31 @@ class Style(db.Model):
 
     
 class Posseder(db.Model):
-    idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), primary_key=True, nullable=False)
-    idS = db.Column(db.Integer, db.ForeignKey('style.idS_1'), primary_key=True, nullable=False)
+    idG = db.Column(db.Integer, db.ForeignKey('groupe.idG'), primary_key=True)
+    idS = db.Column(db.Integer, db.ForeignKey('style.idS_1'), primary_key=True)
 
-    groupe = db.relationship('Groupe', backref='styles')
-    style = db.relationship('Style', backref='groupes')
+    groupe = db.relationship('Groupe', backref='posseder')
+    style = db.relationship('Style', backref='posseder')
 
 
 class Video(db.Model):
     idVideo = db.Column(db.Integer, primary_key=True, autoincrement=True)
     urlVideo = db.Column(db.String(200))
-    idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), nullable=False)
+    idG = db.Column(db.Integer, db.ForeignKey('groupe.idG'), nullable=False)
     pos = db.Column(db.Integer)
 
     groupe = db.relationship('Groupe', backref='video')
 
     def __repr__(self):
         return f"<Video idVideo={self.idVideo} urlVideo={self.urlVideo} idG={self.idG} pos={self.pos}>"
-    ph = argon2.PasswordHasher()
-class SInscrit(db.Model):
-    idEv = db.Column(db.Integer, db.ForeignKey('evenement.idEv'), primary_key=True, nullable=False)
-    idV = db.Column(db.Integer, db.ForeignKey('visiteur.idV'), primary_key=True, nullable=False)
 
-    evenement = db.relationship('Evenement', backref='inscrits')
-    visiteur = db.relationship('Visiteur', backref='inscriptions')
+
+class SInscrit(db.Model):
+    idEv = db.Column(db.Integer, db.ForeignKey('evenement.idEv'), primary_key=True)
+    idV = db.Column(db.Integer, db.ForeignKey('visiteur.idV'), primary_key=True)
+
+    evenement = db.relationship('Evenement', backref='sInscrit')
+    visiteur = db.relationship('Visiteur', backref='sInscrit')
 
 
 class Visiteur(db.Model):
@@ -253,11 +255,11 @@ class Evenement(db.Model):
     gratuit = db.Column(db.Boolean)
     dateDebut = db.Column(db.DateTime)
     dateFin = db.Column(db.DateTime)
-    idG = db.Column(db.String(42), db.ForeignKey('groupe.idG'), nullable=False)
+    idG = db.Column(db.Integer, db.ForeignKey('groupe.idG'), nullable=False)
     idL = db.Column(db.Integer, db.ForeignKey('lieu.idL'), nullable=False)
 
-    groupe = db.relationship('Groupe', backref='evenements')
-    lieu = db.relationship('Lieu', backref='evenements')
+    groupe = db.relationship('Groupe', backref='evenement')
+    lieu = db.relationship('Lieu', backref='evenement')
 
     def __repr__(self):
         return f"<Evenement idEv={self.idEv} typeEv={self.typeEv} descrEv={self.descrEv} " \

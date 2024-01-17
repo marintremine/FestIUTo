@@ -4,10 +4,10 @@ from .forms import LoginForm, RegistrationForm, UpdateForm
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, login_required, logout_user
 from jinja2_fragments.flask import render_block
+from datetime import timedelta
 
 
-
-from .models import Artiste, Evenement, Favoris, Groupe, Instrument, Jouer, LienRS, Lieu, Photo, Posseder, ReseauSocial, Style, TypeBillet, Video, Visiteur
+from .models import Artiste, Billet, Evenement, Favoris, Groupe, Instrument, Jouer, LienRS, Lieu, Photo, Posseder, ReseauSocial, SInscrit, Style, TypeBillet, Video, Visiteur
 
 
 @app.route('/')
@@ -56,6 +56,53 @@ def billetterie():
     type_billets = db.session.query(TypeBillet).all()
     print(debut,fin)
     return render_template('billetterie.html',title='Billetterie',type_billets=type_billets,debut=debut,fin=fin)
+
+@login_required
+@app.route('/billets')
+def billets():
+    type_billets = db.session.query(TypeBillet).all()
+    billets = db.session.query(Billet).filter(Billet.idV == current_user.idV).all()
+    return render_template('billets.html',title='Billets',type_billets=type_billets,billets=billets)
+
+@login_required
+@app.route('/billetterie/achat', methods=["GET"])
+def achat():
+    billet = Billet(idV=current_user.idV, idTb=request.args.get("idTb"), dateDebutValidite=request.args.get("dateDebutValidite"))
+    db.session.add(billet)
+    db.session.commit()
+    flash("Billet acheté avec succès.",'success')
+    return redirect(url_for("billets"))
+
+@login_required
+@app.route('/participe/')
+def participe():
+    s_inscrit = SInscrit(idEv=request.args.get("idEv"), idV=current_user.idV)
+
+
+    evenement = db.session.query(Evenement).filter(Evenement.idEv == request.args.get("idEv")).first()
+    lieu = db.session.query(Lieu).filter(Lieu.idL == evenement.idL).first()
+    
+    if db.session.query(Billet).filter(Billet.idV == current_user.idV).count() == 0:
+        flash("Vous devez avoir un billet pour participer à l'événement.",'error')
+        return redirect(url_for("index"))
+    if db.session.query(SInscrit).filter(SInscrit.idEv == request.args.get("idEv"), SInscrit.idV == current_user.idV).first():
+        flash("Vous participez déjà à l'événement.",'error')
+        return redirect(url_for("index"))
+    if db.session.query(SInscrit).filter(SInscrit.idEv == request.args.get("idEv")).count() >= lieu.nbPlaces:
+        flash("L'événement est complet.",'error')
+        return redirect(url_for("index"))
+    for billet in db.session.query(Billet).filter(Billet.idV == current_user.idV).all():
+        type_billet = db.session.query(TypeBillet).filter(TypeBillet.idTb == billet.idTb).first()
+
+
+        if type_billet.duree == None or (billet.dateDebutValidite <= evenement.dateDebut.date() and billet.dateDebutValidite + timedelta(days=type_billet.duree) >= evenement.dateFin.date()) :
+            db.session.add(s_inscrit)
+            db.session.commit()
+            flash("Vous participez à l'événement avec succès.",'success')
+            return redirect(url_for("billets"))
+    
+    flash("Vous devez avoir un billet valide pour participer à l'événement.",'error')
+    return redirect(url_for("index"))
 
 @app.route('/programmation')
 def programmation():

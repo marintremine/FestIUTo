@@ -1,1 +1,2 @@
 mysqlclient
+jinja2-fragments
