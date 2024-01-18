@@ -61,7 +61,17 @@ section{
 
 .container .box:hover{
     background-color: #F61353;
+    cursor: pointer;
+}
 
+.container .box:hover h3.descr{
+    display: none;
+}
+
+
+
+.container .box:hover h3.reservation{
+    display: block;
 }
 
 
@@ -88,6 +98,12 @@ section{
 
 
 .container .box h3.descr{
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.container .box h3.reservation{
+    display: none;
     color: #ffffff;
     font-size: 20px;
 }

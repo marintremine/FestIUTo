@@ -23,9 +23,9 @@ htmx = HTMX(app)
 
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://tremine:tremine@servinfo-maria:3306/DBtremine'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://tremine:tremine@servinfo-maria:3306/DBtremine'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://root:root@localhost:3306/festiuto'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://root@localhost:3306/festiuto'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb://root@localhost:3306/festiuto'
 app.config['SECRET_KEY'] = 'iMQWPgaEP2WQQUxPvKiYiZoP5jaP5RdzGoE4msqtGFTJgSVKTwVH3SEUGsjRRTkFZMKqXKmCsAaEWbdjWJEb8ip2rNi4hCKezTxe5VVXfiAgDfYzdLRAEqf3dou8gGwr'
 
 
@@ -35,6 +35,7 @@ csrf.init_app(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = 'connexion'
 
 
 def admin():
@@ -163,11 +164,14 @@ def admin():
     admin.add_view(myModelView(Evenement, db.session))
 
 admin()
+
+
 @login_manager.unauthorized_handler
 def unauthorized_callback():
     """
     Redirection vers la page de connexion si l'utilisateur n'est pas connecté
     """
+    flash("Vous devez être connecté pour accéder à cette page")
     return redirect('/connexion')
 
 

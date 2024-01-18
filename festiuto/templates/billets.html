@@ -6,6 +6,7 @@
 
 <h1>Mes billets :</h1>
 
+{% if billets | length > 0%}
 {% for billet in billets %}
     {% for type_billet in type_billets %}
         {% if billet.idTb == type_billet.idTb %}
@@ -20,5 +21,35 @@
         {% endif %}
     {% endfor %}
 {% endfor %}
+{% else %}
+    <h1>Oh, vous n'avez pas encore vos billets, mais ne vous en faites pas ! Cliquez ici pour acheter vos billets et profiter pleinement du festival.</h1>
+{% endif %}
+
+<h1>Mes réservations :</h1>
+
+
+{% if reservations | length > 0 %}
+{% for reservation in reservations %}
+    {% for evenement in evenements %}
+        {% if reservation.idEv == evenement.idEv %}
+            <h1>{{evenement.descrEv}}</h1>
+            <h1>{{evenement.dateDebut}}</h1>
+            <h1>{{evenement.dateFin}}</h1>
+            {% for lieu in lieux %}
+                {% if evenement.idL == lieu.idL %}
+                    <h1>{{lieu.nomLieu}}</h1>
+                {% endif %}
+            {% endfor %}
+            <form action="{{url_for('desinscription')}}">
+                <input type="hidden" name="idEv" value="{{evenement.idEv}}">
+                <button  type="submit">Annuler</button>
+            </form>
+            
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+{% else %}
+    <h1>Oh, il semble que vous n'ayez pas encore de réservations. Aucun souci ! Cliquez ici pour en ajouter et garantir votre place pour les événements du festival.</h1>
+{% endif %}
 
 {% endblock %}

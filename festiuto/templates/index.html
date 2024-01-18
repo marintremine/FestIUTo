@@ -73,7 +73,7 @@
                 Facilite l'achat de billets
             </h3>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel tortor dictum, sagittis augue quis, porttitor arcu. Maecenas quis accumsan turpis, at vehicula leo. 
+                Facilitez l'achat de billets avec notre système de réservation interne. Profitez d'une expérience sans tracas, car notre processus exclusif vous permet d'acquérir vos billets directement sur notre plateforme. 
             </p>
         </div>
 
@@ -118,8 +118,10 @@
     <section id="section4">
 
         <ul>
-            {% for groupe in groupes %}
-                {% for favori in favoris%}
+            {% if favoris | length > 0 %}
+            {% for favori in favoris%}
+                {% for groupe in groupes %}
+                
                     
                     {% if groupe.idG == favori.idG %}
 
@@ -145,6 +147,9 @@
                     {% endif %}
                 {% endfor %}
             {% endfor %}
+            {% else %}
+                <h1>Oh, semble-t-il que vous n'ayez pas encore créé votre liste de favoris. Pas de problème ! Cliquez ici pour ajouter vos préférences musicales et personnaliser votre expérience au festival.</h1>
+            {% endif%}
         </ul>
 
     </section>
@@ -155,7 +160,7 @@
     </section>
 
     <section id="section5">   
-        
+        {% if groupes_propositions | length > 0 %}
         <ul>
         {% for groupe in groupes_propositions %}
             <li class="box">
@@ -178,8 +183,13 @@
             </li>
         {% endfor %}
         </ul> 
+        {% else %}
+            <h1>Oh, vous n'avez pas encore sélectionné vos favoris, mais ne vous inquiétez pas ! Nous serions ravis de vous recommander des groupes une fois que vous aurez ajouté quelques favoris.</h1>
+        {% endif %}
     </section>
 
+{% else %}
+<h1>Oh, il semble que l'accès à cette fonctionnalité soit réservé aux utilisateurs connectés. Veuillez cliquer ici pour vous connecter et profiter pleinement de cette option.</h1>
 {% endif %}
 
 

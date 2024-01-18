@@ -22,12 +22,13 @@
     </section>
 
 
-    <section class="container">
+    <section class="container jour" id="{{jour}}">
         
             {% for evenement in evenements %}
                 
                 {% if evenement.dateDebut.date() == jour %}
-                <div class="jour box" id="{{jour}}">
+                <form action="{{url_for('participe')}}">
+                <div class="box" id="{{evenement.idEv}}" type="submit">
                     
                     
 
@@ -39,6 +40,8 @@
                             </div>
                             <div class="center">
                                 <h3 class="descr">{{evenement.descrEv}}</h3>
+                                <h3 class="reservation">RÉSERVER</h3>
+                                <input type="hidden" name="idEv" value="{{evenement.idEv}}">
                             </div>
                             <div class="bottom">
                                 {% if evenement.gratuit %}
@@ -46,12 +49,20 @@
                                 {% else %}
                                     <h4 class="prix">PAYANT</h4>
                                 {% endif %}
-                                <h4 class="places">{{lieu.nbPlaces}} places</h4>
+
+                                {% for reservation in reservations %}
+                                    {% if reservation.idEv == evenement.idEv %}
+                                        <h4 class="places">{{reservation.nb}}/{{lieu.nbPlaces}} places</h4>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                             
                         {% endif %}
                     {% endfor %}
+                    
                 </div>
+                </form>
+
                 {% endif %}
                 
             {% endfor %}
