@@ -1,0 +1,38 @@
+main section.profil{
+    
+}
+
+main section.profil div.criteria{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+main section.profil  label{
+    
+}
+
+main section.profil .result{
+
+}
+
+main section.profil input{
+    font-size: 1.35rem;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+}
+
+
+main section.profil button{
+    margin-top: 20px;
+    background: #F61353;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.5em;
+    cursor: pointer;
+}

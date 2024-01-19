@@ -6,16 +6,21 @@
 {% endblock %}
 {% block main %}
 
+<section>
+    <h1 class="title">MON PROFIL</h1>
+</section>
+
+<section class="profil">
 {% if not edit %}
 {% block details %}
     <div hx-target="this" hx-swap="outerHTML">
-        <div><label>Prénom</label> : {{ current_user.prenomV }}</div>
-        <div><label>Nom de famille</label> : {{ current_user.nomV }}</div>
-        <div><label>Email</label> : {{ current_user.email }}</div>
-        <div><label>Date de naissance</label> : {{ current_user.dateNaissV }}</div>
-        <div><label>Numero de telephone</label> : {{ current_user.numtel }}</div>
+        <div class="criteria"><label>Prénom :</label><span class="result">{{ current_user.prenomV }}</span></div>
+        <div class="criteria"><label>Nom de famille :</label><span class="result">{{ current_user.nomV }}</span></div>
+        <div class="criteria"><label>Email :</label><span class="result">{{ current_user.email }}</span></div>
+        <div class="criteria"><label>Date de naissance :</label><span class="result">{{ current_user.dateNaissV }}</span></div>
+        <div class="criteria"><label>Numero de telephone :</label><span class="result">{{ current_user.numtel }}</span></div>
         <button hx-get="/profil" class="btn btn-primary">
-        Editer mon profil
+            EDITER MON PROFIL
         </button>
     </div>
 {% endblock %}
@@ -27,9 +32,9 @@
 
 <form action="/profil" method="POST" hx-target="this" hx-swap="outerHTML">
     {{ form.csrf_token }}
-    <div>
-        <label>Prénom</label> : 
-      {{ form.firstname }}
+    <div class="criteria">
+        <label>Prénom :</label>
+        {{ form.firstname }}
     </div>
     {% if form.firstname.errors %}
         <ul class="errors">
@@ -38,9 +43,9 @@
         {% endfor %}
         </ul>
     {% endif %}
-    <div>
-        <label>Nom de famille</label> : 
-      {{ form.lastname }}
+    <div class="criteria">
+        <label>Nom de famille :</label>
+        {{ form.lastname }}
     </div>
     {% if form.lastname.errors %}
         <ul class="errors">
@@ -49,9 +54,9 @@
         {% endfor %}
         </ul>
     {% endif %}
-    <div>
-        <label>Email</label> :
-      {{ form.email }}
+    <div class="criteria">
+        <label>Email :</label>
+        {{ form.email }}
     </div>
     {% if form.email.errors %}
         <ul class="errors">
@@ -60,9 +65,9 @@
         {% endfor %}
         </ul>
     {% endif %}
-    <div>
-        <label>Date de naissance</label> :
-      {{ form.birthdate }}
+    <div class="criteria">
+        <label>Date de naissance :</label>
+        {{ form.birthdate }}
     </div>
     {% if form.birthdate.errors %}
         <ul class="errors">
@@ -71,9 +76,9 @@
         {% endfor %}
         </ul>
     {% endif %}
-    <div>
-        <label>Numero de telephone</label> :
-      {{ form.numtel }}
+    <div class="criteria">
+        <label>Numero de telephone :</label>
+        {{ form.numtel }}
     </div>
     {% if form.numtel.errors %}
         <ul class="errors">
@@ -82,10 +87,12 @@
         {% endfor %}
         </ul>
     {% endif %}
-    <button class="btn">Mettre à jour</button>
-    <button class="btn" hx-post="/profil">Annuler</button>
+    <button class="btn">METTRE A JOUR</button>
+    <button class="btn" hx-post="/profil">ANNULER</button>
 </form>
 {% endblock %}
+
+</section>
 {% endif %}
 
 {% endblock %}

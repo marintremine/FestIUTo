@@ -1,6 +1,6 @@
 
 section{
-    padding: 25px 50px;
+    padding: 25px 0px;
 }
 
 section#section1{
@@ -111,11 +111,11 @@ section#image h6{
 section#section3 .container{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 section#section3 .container .box{
-    margin: 2em;
+    margin: 1em;
     border-top: #474747 solid 5px;
     background-color: #333333;
     width: 20em;

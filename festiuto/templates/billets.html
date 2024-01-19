@@ -4,52 +4,96 @@
 {% endblock %}
 {% block main %}
 
-<h1>Mes billets :</h1>
+<section>
+    <h1 class="title">MON ESPACE</h1>
+</section>
 
+
+<section id="intersection">
+    <h3 class="title">MES BILLETS</h3>
+    <div class="ligne"></div>
+</section>
+
+
+
+
+
+<section class="container-billet">
 {% if billets | length > 0%}
 {% for billet in billets %}
     {% for type_billet in type_billets %}
         {% if billet.idTb == type_billet.idTb %}
-            <h1>{{type_billet.nomB}}</h1>
-            {% if type_billet.duree == None %}
-                <h1>Tous le festival</h1>
-            {% else %}
-                <h1>{{type_billet.duree}} jours</h1>
-            {% endif %}
-            <h1>{{type_billet.prix}} euros</h1>
-            <h1>{{billet.dateDebutValidite}}</h1>
+            <div class="ticket-box">
+                <h3>{{type_billet.nomB}}</h3>
+                <p>{{type_billet.prix}}€</p>
+                {% if type_billet.duree == None %}
+                    <p>Tous le festival</p>
+                {% else %}
+                    <p>{{billet.dateDebutValidite.strftime('%A %d %B')}}</p>
+                {% endif %}
+            </div>
         {% endif %}
     {% endfor %}
 {% endfor %}
 {% else %}
-    <h1>Oh, vous n'avez pas encore vos billets, mais ne vous en faites pas ! Cliquez ici pour acheter vos billets et profiter pleinement du festival.</h1>
+    <h4 class="alert-empty">Oh, vous n'avez pas encore vos billets, mais ne vous en faites pas ! <a href="{{url_for('billetterie')}}">Cliquez ici</a> pour acheter vos billets et profiter pleinement du festival.</h4>
 {% endif %}
+</section>
 
-<h1>Mes réservations :</h1>
 
 
-{% if reservations | length > 0 %}
-{% for reservation in reservations %}
+<section id="intersection">
+    <h3 class="title">MES RÉSERVATIONS</h3>
+    <div class="ligne"></div>
+</section>
+
+<section class="container-reservation">
+{% if mes_reservations | length > 0 %}
+{% for ma_reservation in mes_reservations %}
     {% for evenement in evenements %}
-        {% if reservation.idEv == evenement.idEv %}
-            <h1>{{evenement.descrEv}}</h1>
-            <h1>{{evenement.dateDebut}}</h1>
-            <h1>{{evenement.dateFin}}</h1>
+
+        {% if ma_reservation.idEv == evenement.idEv %}
+        <div onclick="location.href='/desinscription/?idEv={{evenement.idEv}}'" class="box" id="{{evenement.idEv}}">                       
             {% for lieu in lieux %}
                 {% if evenement.idL == lieu.idL %}
-                    <h1>{{lieu.nomLieu}}</h1>
+                    <div class="top">
+                        <h4 class="horaire">{{evenement.dateDebut.strftime('%H:%M')}}-{{evenement.dateFin.strftime('%H:%M')}}</h4>
+                        <h4 class="lieu">{{lieu.nomLieu}}</h4>
+                    </div>
+                    <div class="center">
+                        <h3 class="descr">{{evenement.descrEv}}</h3>
+                        <h3 class="annuler">ANNULER</h3>
+                    </div>
+                    <div class="bottom">
+                        {% if evenement.gratuit %}
+                            <h4 class="prix">GRATUIT</h4>
+                        {% else %}
+                            <h4 class="prix">PAYANT</h4>
+                        {% endif %}
+
+                        {% for reservation in reservations %}
+                            {% if reservation.idEv == evenement.idEv %}
+                                <h4 class="places">{{reservation.nb}}/{{lieu.nbPlaces}} places</h4>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    
                 {% endif %}
             {% endfor %}
-            <form action="{{url_for('desinscription')}}">
-                <input type="hidden" name="idEv" value="{{evenement.idEv}}">
-                <button  type="submit">Annuler</button>
-            </form>
-            
+        </div>
         {% endif %}
     {% endfor %}
 {% endfor %}
+
+
+
+
 {% else %}
-    <h1>Oh, il semble que vous n'ayez pas encore de réservations. Aucun souci ! Cliquez ici pour en ajouter et garantir votre place pour les événements du festival.</h1>
+    <h4 class="alert-empty">Oh, il semble que vous n'ayez pas encore de réservations. Aucun souci ! <a href="{{url_for('programmation')}}">Cliquez ici</a> pour en ajouter et garantir votre place pour les événements du festival.</h4>
 {% endif %}
+</section>
+
+
+
 
 {% endblock %}

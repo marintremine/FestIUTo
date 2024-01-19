@@ -61,12 +61,15 @@ def billetterie():
 @app.route('/billets')
 @login_required
 def billets():
+    evenements = db.session.query(Evenement).all()
     type_billets = db.session.query(TypeBillet).all()
     billets = db.session.query(Billet).filter(Billet.idV == current_user.idV).all()
-    reservations = db.session.query(SInscrit).filter(SInscrit.idV == current_user.idV).all()
-    evenements = db.session.query(Evenement).all()
+    mes_reservations = db.session.query(SInscrit).filter(SInscrit.idV == current_user.idV).all()
+    reservations = []
+    for evenement in evenements:
+        reservations.append({"idEv":evenement.idEv, "nb":db.session.query(SInscrit).filter(SInscrit.idEv == evenement.idEv).count()})
     lieux = db.session.query(Lieu).all()
-    return render_template('billets.html',title='Billets',type_billets=type_billets,billets=billets,reservations=reservations,evenements=evenements, lieux=lieux)
+    return render_template('billets.html',title='Billets',type_billets=type_billets,billets=billets,mes_reservations=mes_reservations,evenements=evenements, lieux=lieux, reservations=reservations)
 
 
 @app.route('/billetterie/achat', methods=["GET"])
@@ -177,7 +180,8 @@ def groupe():
     photos = db.session.query(Photo).all()
     suggestions = []
     favoris = db.session.query(Favoris).all()
-
+    selected=None
+    query = ""
     if current_user.is_authenticated:
         favoris = db.session.query(Favoris).filter(Favoris.idV == current_user.idV).all()
         print(favoris)
@@ -193,10 +197,12 @@ def groupe():
         if style == "fav":
             groupes = groupes.join(Favoris).filter(Favoris.idV == current_user.idV)
         groupes = groupes.all()
-        return render_block("groupe.html", "results", groupes=groupes,styles=styles,artistes=artistes,posseder=posseder,lien_rs=lien_rs,reseau_social=reseau_social,photos=photos,favoris=favoris,suggestions=suggestions)
+        selected=style
+        query=q
+        return render_block("groupe.html", "results", groupes=groupes,styles=styles,artistes=artistes,posseder=posseder,lien_rs=lien_rs,reseau_social=reseau_social,photos=photos,favoris=favoris,suggestions=suggestions,selected=selected,query=query)
 
     groupes = groupes.all()
-    return render_template('groupe.html',title='Groupe',groupes=groupes,styles=styles,artistes=artistes,posseder=posseder,lien_rs=lien_rs,reseau_social=reseau_social,photos=photos,favoris=favoris)
+    return render_template('groupe.html',title='Groupe',groupes=groupes,styles=styles,artistes=artistes,posseder=posseder,lien_rs=lien_rs,reseau_social=reseau_social,photos=photos,favoris=favoris,selected=selected,query=query)
 
 @app.route('/groupe/search', methods=["POST","GET"])
 def search():

@@ -10,31 +10,45 @@
 
 
 
-<form hx-get="/groupe" hx-target="#results" hx-trigger="keyup changed delay:500ms from:#myinput, change from:#style-select, myEvent from:document" id="recherche">
-    <input type="text" class="input" placeholder="Rechercher un groupe..." id="myinput" name="q" >
-    <select name="style" id="style-select">
-            <option value="all">Tous les styles</option>
-            {% if current_user.is_authenticated %}
-            <option value="fav">Mes favoris</option>
-            {% endif %}
-            {% for style in styles %}
-            <option value="{{style.nomS}}">{{style.nomS}}</option>
-            {% endfor %}
-    </select>
-</form>
 
+<section>
+    <h1 class="title">GROUPE</h1>
+</section>
 
 
 
 <section id="results">
+
 {% block results %}
+
+    <form hx-get="/groupe" hx-target="#results" hx-trigger="keyup changed delay:500ms from:#myinput, change from:#style-select, myEvent from:document" id="recherche">
+        <input type="text" class="input" placeholder="Rechercher un groupe..." id="myinput" name="q" value="{{query}}">
+        <select name="style" id="style-select">
+                <option value="all">Tous les styles</option>
+                {% if current_user.is_authenticated %}
+                    {% if selected == 'fav' %}
+                        <option value="fav" selected>Mes favoris</option>
+                    {% else %}
+                        <option value="fav">Mes favoris</option>
+                    {% endif %}
+                {% endif %}
+                {% for style in styles %}
+                    {% if style.nomS == selected %}
+                        <option value="{{style.nomS}}" selected>{{style.nomS}}</option>
+                    {% else %}
+                        <option value="{{style.nomS}}">{{style.nomS}}</option>
+                    {% endif %}
+                
+                {% endfor %}
+        </select>
+    </form>
 
     <ul class="suggestion">
         {% if suggestions | length >= 1 %}
             <h3>Dans le même style : </h3>
         {% endif %}
         {% for suggestion in suggestions %}
-            <li>
+            <li hx-get="/groupe?q={{query}}&style={{suggestion.nomS}}" hx-trigger="click" id="recherche" hx-target="#results">
                 {{suggestion.nomS}}
             </li>
         {% endfor %}

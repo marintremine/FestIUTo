@@ -7,13 +7,13 @@
 {% block main %}
     <section>
         <h1 class="title">PROGRAMMATION</h1>
-
-        <ul class="navprog">
-            {% for jour in jours %}
-                <li><a href="#{{jour}}">{{jour.strftime('%A %d %B').upper()}}</a></li>
-            {% endfor %}
-        </ul>
     </section>
+
+    <ul class="navprog">
+        {% for jour in jours %}
+            <li><a href="#{{jour}}">{{jour.strftime('%A %d %B').upper()}}</a></li>
+        {% endfor %}
+    </ul>
 
     {% for jour in jours %}
     <section id="intersection">
@@ -27,21 +27,20 @@
             {% for evenement in evenements %}
                 
                 {% if evenement.dateDebut.date() == jour %}
-                <form action="{{url_for('participe')}}">
-                <div class="box" id="{{evenement.idEv}}" type="submit">
+                
+                <div onclick="location.href='/participe?idEv={{evenement.idEv}}'" class="box" id="{{evenement.idEv}}">
                     
                     
-
+                    
                     {% for lieu in lieux %}
                         {% if evenement.idL == lieu.idL %}
                             <div class="top">
-                                <h4 class="horaire">{{evenement.dateDebut.strftime('%H:%M')}}</h4>
+                                <h4 class="horaire">{{evenement.dateDebut.strftime('%H:%M')}}-{{evenement.dateFin.strftime('%H:%M')}}</h4>
                                 <h4 class="lieu">{{lieu.nomLieu}}</h4>
                             </div>
                             <div class="center">
                                 <h3 class="descr">{{evenement.descrEv}}</h3>
                                 <h3 class="reservation">RÉSERVER</h3>
-                                <input type="hidden" name="idEv" value="{{evenement.idEv}}">
                             </div>
                             <div class="bottom">
                                 {% if evenement.gratuit %}
@@ -61,7 +60,6 @@
                     {% endfor %}
                     
                 </div>
-                </form>
 
                 {% endif %}
                 

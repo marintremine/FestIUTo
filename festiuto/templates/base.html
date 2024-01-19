@@ -78,10 +78,11 @@
 
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="{{url_for('profil')}}">Voir mon profil</a>
+
+					<a class="dropdown-item" href="{{url_for('billets')}}">Voir mes billets</a>
 					{% if current_user.admin %}
 						<a class="dropdown-item" href="{{url_for('admin.index')}}">Administration</a>
 					{% endif %}
-					<a class="dropdown-item" href="{{url_for('billets')}}">Voir mes billets</a>
 					<a class="dropdown-item" href="{{url_for('logout')}}">Se déconnecter</a>
 				</div>
 			</div>
@@ -207,7 +208,7 @@
 
 		function move(element){
 			let width = 100;
-			let id = setInterval(frame, 25);
+			let id = setInterval(frame, 30);
 			function frame() {
 				if (width <= 0) {
 					clearInterval(id);

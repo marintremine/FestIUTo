@@ -1,9 +1,4 @@
 
-
-form#recherche{
-    padding: 25px 100px;
-}
-
 main #recherche{
     display: flex;
 } 
@@ -23,9 +18,11 @@ main #recherche .input:focus {
 
 main ul.suggestion{
     display: flex;
-    margin: 0 100px;
     align-items: center;
+    margin: 25px 0;
 }
+
+
 
 main ul.suggestion li{
     margin: 0 10px;
@@ -36,15 +33,21 @@ main ul.suggestion li{
     font-size: 15px;
 }
 
+main ul.suggestion li:hover{
+    border: 1px solid #F61353;
+    cursor: pointer;
+}
+
 main .container{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 0 50px;
+    gap: 50px;
 }
 
 main .container .box{
-    margin: 50px;
+    /* margin: 50px; */
+
     width: 500px;
     height: 300px;
     background-color: #151515;

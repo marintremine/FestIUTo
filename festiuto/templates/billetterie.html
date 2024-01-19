@@ -8,30 +8,36 @@
 
 
 <div class="container">
-    <div>
-        <h1>BILLETTERIE</h1>
-    </div>
+    <section>
+        <h1 class="title">BILLETTERIE</h1>
+    </section>
 
-    <div>
-        <p>Vous pouvez acheter vos billets en ligne :</p>
-    </div>
+    <section id="intersection">
+        <h3 class="title">BILLETS CLASSIQUES</h3>
+        <div class="ligne"></div>
+    </section>
 
-    <div>
-        <h2>Types de billets disponibles :</h2>
+    <section>
         <ul class="ticket-container">
             {% for type_billet in type_billets %}
+            <form action="{{url_for('achat')}}">
                 <li class="ticket-box">
-                    <form action="{{url_for('achat')}}">
-                        <input type="hidden" name="idTb" value="{{type_billet.idTb}}">
-                        <h3>{{type_billet.nomB}}</h3>
-                        <p>{{type_billet.prix}}€</p>
-                        <input type="date" name="dateDebutValidite" value="{{ debut }}" min="{{ debut }}" max="{{ fin }}">
-                        <button type="submit">Acheter</button>
-                    </form>
+                        <div class="main-box">
+                            <input type="hidden" name="idTb" value="{{type_billet.idTb}}">
+                            <h3>{{type_billet.nomB}}</h3>
+                            <p>{{type_billet.prix}}€</p>
+                            {% if type_billet.duree == None %}
+                            <p>Tous le festival</p>
+                            {% else %}
+                            <input type="date" name="dateDebutValidite" value="{{ debut }}" min="{{ debut }}" max="{{ fin }}">
+                            {% endif %}
+                        </div>
+                        <button type="submit">ACHETER</button>
                 </li>
+            </form>
             {% endfor %}
         </ul>
-    </div>
+    </section>
 </div>
 
 

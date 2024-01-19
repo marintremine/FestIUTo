@@ -1,27 +1,56 @@
 .ticket-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .ticket-container .ticket-box {
-    border-top: #474747 solid 5px;
     background-color: #333333;
-    padding: 10px;
-    margin: 10px;
+    width: 250px;
+    height: 250px;
+    margin: 1em;
     text-align: left;
+    border: #F61353 solid 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* .ticket-container .ticket-box {
+    background-color: #F61353;
+    cursor: pointer;
+} */
+
+.ticket-container .ticket-box .main-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.ticket-container .ticket-box .main-box input{
+    font-size: 15px;
 }
 
 .ticket-container .ticket-box button {
-    background-color: #F61353; /* Green */
+    background-color: #333333;
     border: none;
+    border-top: #F61353 2px solid;
+    
     color: white;
-    padding: 15px 32px;
+    width: 100%;
+    height: 75px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
     cursor: pointer;
+    transition: .2s ease;
+}
+
+.ticket-container .ticket-box button:hover {
+    background-color: #F61353;
 }

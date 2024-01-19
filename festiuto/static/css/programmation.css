@@ -1,9 +1,5 @@
 /* Styles for the heading */
-h1.title {
-    color: #ffffff;
-    font-size: 40px;
-    margin-bottom: 20px;
-}
+
 
 /* Styles for the navigation links */
 ul.navprog {
@@ -11,6 +7,7 @@ ul.navprog {
     margin: 0;
     padding: 0;
     display: flex;
+    flex-wrap: wrap;
 
 }
 ul.navprog li {
@@ -34,18 +31,16 @@ ul.navprog li a:hover {
 }
 
 
-section{
-    padding: 25px 100px;
-}
+
 
 /* Styles for the container */
-.container {
+section.container {
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
 }
 
-.container .box{
+section.container .box{
     margin: 1em;
     background-color: #333333;
     padding: 5px;
@@ -59,29 +54,29 @@ section{
     align-items: center;
 }
 
-.container .box:hover{
+section.container .box:hover{
     background-color: #F61353;
     cursor: pointer;
 }
 
-.container .box:hover h3.descr{
+section.container .box:hover h3.descr{
     display: none;
 }
 
 
 
-.container .box:hover h3.reservation{
+section.container .box:hover h3.reservation{
     display: block;
 }
 
 
-.container .box .top{
+section.container .box .top{
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
 
-.container .box .center{
+section.container .box .center{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,19 +85,19 @@ section{
     width: 60%;
 }
 
-.container .box .bottom{
+section.container .box .bottom{
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
 
 
-.container .box h3.descr{
+section.container .box h3.descr{
     color: #ffffff;
     font-size: 20px;
 }
 
-.container .box h3.reservation{
+section.container .box h3.reservation{
     display: none;
     color: #ffffff;
     font-size: 20px;
